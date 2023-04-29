@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <meta http-equiv="Permissions-Policy" content="interest-cohort=()"> -->
+
+    <title>Document</title>
+    <style>
+        table,
+        th,
+        td {
+            border: 1px solid;
+            /* width: 100%; */
+        }
+    </style>
+</head>
+
+<body>
+    <button id="start">start</button>
+    <button id="stop">stop</button>
+    <br><br>
+
+    <table>
+        <tr>
+            <td>
+                <div>
+                    輸入
+                </div>
+            </td>
+            <td>
+                <div>
+                    輸出
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div>Busvoltage: <span id="inputBusvoltage">-1</span></div>
+                <div>Shuntvoltage: <span id="inputShuntvoltage">-1</span></div>
+                <div>Current: <span id="inputCurrent">-1</span></div>
+                <div>Loadvoltage: <span id="inputLoadvoltage">-1</span></div>
+                <div>Power: <span id="inputPower">-1</span></div>
+            </td>
+            <td>
+                <div>Busvoltage: <span id="outputBusvoltage">-1</span></div>
+                <div>Shuntvoltage: <span id="outputShuntvoltage">-1</span></div>
+                <div>Current: <span id="outputCurrent">-1</span></div>
+                <div>Loadvoltage: <span id="outputLoadvoltage">-1</span></div>
+                <div>Power: <span id="outputPower">-1</span></div>
+            </td>
+
+        </tr><br>
+        <label for="dataChart">選擇生成的圖表：</label>
+        <select name="dataChart" id="dataChart">
+            <option value="inputChart">輸入</option>
+            <option value="outputChart">輸出</option>
+        </select>
+
+        <canvas id="myChart" style="width: 100%; height: 300px;"></canvas>
+    </table>
+    <br>
+    <textarea name="" id="log" cols="50" rows="10"></textarea>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="index.js"></script>
+</body>
+
+</html>
