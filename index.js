@@ -1,3 +1,4 @@
+
 var input_Characteristic, output_Characteristic;
 const inputData = [], outputData = [];
 let startBtn = document.querySelector('#start');
@@ -25,6 +26,13 @@ let outputUuid = "d2912856-de63-11ed-b5ea-0242ac120002";
 let UuidTargets = [inputUuid, outputUuid];
 let server;
 let service;
+
+function speak(text){
+  const synth = window.speechSynthesis
+  const utter = new SpeechSynthesisUtterance()
+  utter.text = text
+  synth.speak(utter)
+}
 
 async function onStartButtonClick() {
   try {
@@ -58,7 +66,7 @@ async function onStartButtonClick() {
 
       flag = true
     }
-
+    speak('成功連接');
     log('> Notifications started');
   } catch (error) {
     log('Argh! ' + error);
@@ -74,6 +82,7 @@ async function onStopButtonClick() {
       await characteristicTarget.stopNotifications();
       characteristicTarget.removeEventListener('characteristicvaluechanged',
         callback);
+      speak('已斷開連接');
     }
     await server.disconnect(); // 需要手動斷開 GATT 伺服器的連線
 
