@@ -27,7 +27,7 @@ let UuidTargets = [inputUuid, outputUuid];
 let server;
 let service;
 
-function speak(text){
+function speak(text) {
   const synth = window.speechSynthesis
   const utter = new SpeechSynthesisUtterance()
   utter.text = text
@@ -82,8 +82,8 @@ async function onStopButtonClick() {
       await characteristicTarget.stopNotifications();
       characteristicTarget.removeEventListener('characteristicvaluechanged',
         callback);
-      speak('已斷開連接');
     }
+    speak('已斷開連接');
     await server.disconnect(); // 需要手動斷開 GATT 伺服器的連線
 
     log('> Notifications stopped');
@@ -121,7 +121,7 @@ function callback(event) {
   // console.log(event.currentTarget)
   // console.log(event.currentTarget.uuid)
   if (event.currentTarget.uuid === inputUuid ||
-    event.currentTarget.uuid === outputUuid ) {
+    event.currentTarget.uuid === outputUuid) {
 
     let value = event.currentTarget.value;
     let a = [];
@@ -130,11 +130,11 @@ function callback(event) {
     }
     let bytes = a;
 
-    let busvoltage = bytes2int16([bytes[0], bytes[1]])/1000
-    let shuntvoltage = bytes2int16([bytes[2], bytes[3]])/100
-    let current = bytes2int16([bytes[4], bytes[5]])/1000
-    let loadvoltage = bytes2int16([bytes[6], bytes[7]])/100
-    let power_W = bytes2int16([bytes[8], bytes[9]])/10
+    let busvoltage = bytes2int16([bytes[0], bytes[1]]) / 1000
+    let shuntvoltage = bytes2int16([bytes[2], bytes[3]]) / 100
+    let current = bytes2int16([bytes[4], bytes[5]]) / 1000
+    let loadvoltage = bytes2int16([bytes[6], bytes[7]]) / 100
+    let power_W = bytes2int16([bytes[8], bytes[9]]) / 10
 
     if (event.currentTarget.uuid === inputUuid) {
       document.getElementById("inputBusvoltage").innerHTML = busvoltage;
