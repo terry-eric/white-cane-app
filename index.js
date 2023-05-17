@@ -89,7 +89,7 @@ async function onStartButtonClick() {
       flag = true
     }
     speak('成功連接');
-    log('> Notifications started');
+    log('> Notifications started'); 
   } catch (error) {
     log('Argh! ' + error);
   }
