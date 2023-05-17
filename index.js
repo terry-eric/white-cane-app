@@ -1,14 +1,36 @@
 
 var input_Characteristic, output_Characteristic;
 const inputData = [], outputData = [];
-let startBtn = document.querySelector('#start');
-let stopBtn = document.querySelector('#stop');
-let chartType = "inputChart";////
+// let startBtn = document.querySelector('#start');
+// let stopBtn = document.querySelector('#stop');
+let Btn = document.querySelector('#myButton');
+
+let chartType = "noneChart";////
 let chartData = [];
 let flag = false;
 
-startBtn.addEventListener("click", onStartButtonClick);
-stopBtn.addEventListener("click", onStopButtonClick);
+// startBtn.addEventListener("click", onStartButtonClick);
+// stopBtn.addEventListener("click", onStopButtonClick);
+Btn.addEventListener("click", toggleColor);
+
+
+function toggleColor() {
+  var button = document.getElementById("myButton");
+  console.log(button);
+  if (button.classList.contains("btn-outline-primary")) {
+    button.classList.remove("btn-outline-primary");
+    button.classList.add("btn-outline-danger");
+    button.innerHTML = "STOP";
+    onStartButtonClick();
+
+  } else {
+    button.classList.remove("btn-outline-danger");
+    button.classList.add("btn-outline-primary");
+    button.innerHTML = "START";
+    onStopButtonClick();
+  }
+}
+
 
 function log(text) {
   let log_ele = document.querySelector("#log")
@@ -112,7 +134,7 @@ async function onStopButtonClick() {
       URL.revokeObjectURL(url);
     }
   } catch (error) {
-    console.log(error)
+    console.error(error)
     log('Argh! ' + error);
   }
 }
@@ -177,10 +199,10 @@ select.addEventListener('change', (event) => {
   chartType = event.target.value;
   myChart.data.datasets.forEach(dataset => {
     dataset.data = []
-    dataPoints = 0
+    chartData = []
   })
+  dataPoints = 0
 });
-
 
 var ctx = document.getElementById('myChart');
 var maxDataPoints = 100; // 最多顯示1000筆資料
@@ -255,21 +277,27 @@ var myChart = new Chart(ctx, {
 var dataPoints = 0; // 紀錄資料筆數
 const intervalID = setInterval(() => {
   if (flag) {
-    // 如果已經有1000筆資料，則刪除第一筆資料
-    if (dataPoints >= maxDataPoints) {
-      myChart.data.datasets.forEach(dataset => {
-        dataset.data.shift(); // 刪除第一筆資料
+    if (!(chartData.length == 0)) {
+      // 如果已經有1000筆資料，則刪除第一筆資料
+      // console.log(dataPoints);
+      if (dataPoints >= maxDataPoints) {
+        myChart.data.datasets.forEach(dataset => {
+          dataset.data.shift(); // 刪除第一筆資料
+        });
+      } else {
+        dataPoints++;
+      }
+
+      // 新增新的數據
+      myChart.data.datasets.forEach((dataset, index) => {
+        dataset.data.push(chartData[index]);
       });
     } else {
-      dataPoints++;
+      console.log("hi");
     }
-
-    // 新增新的數據
-    myChart.data.datasets.forEach((dataset, index) => {
-      dataset.data.push(chartData[index]);
-    });
     myChart.update(); // 更新圖表
   }
-  else { }
-}, 50);
+}, 10);
+
+
 
