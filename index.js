@@ -1,9 +1,8 @@
-
-var input_Characteristic, output_Characteristic;
 const inputData = [], outputData = [];
 // let startBtn = document.querySelector('#start');
 // let stopBtn = document.querySelector('#stop');
 let Btn = document.querySelector('#myButton');
+let BtnBle = document.querySelector('#bleButton');
 
 let chartType = "noneChart";////
 let chartData = [];
@@ -12,6 +11,7 @@ let flag = false;
 // startBtn.addEventListener("click", onStartButtonClick);
 // stopBtn.addEventListener("click", onStopButtonClick);
 Btn.addEventListener("click", toggleColor);
+BtnBle.addEventListener("click", toggleColorBle);
 
 
 function toggleColor() {
@@ -31,6 +31,23 @@ function toggleColor() {
   }
 }
 
+function toggleColorBle() {
+  var button = document.getElementById("bleButton");
+  console.log(button);
+  if (button.classList.contains("btn-outline-secondary")) {
+    button.classList.remove("btn-outline-secondary");
+    button.classList.add("btn-outline-success");
+    button.innerHTML = "Solar Power Supply";
+    UrbanPowerButtonClick();
+
+  } else {
+    button.classList.remove("btn-outline-success");
+    button.classList.add("btn-outline-secondary");
+    button.innerHTML = "Urban Power Supply";
+    SolarPowerSupplyClick();
+  }
+}
+
 
 function log(text) {
   let log_ele = document.querySelector("#log")
@@ -43,9 +60,10 @@ function log(text) {
 let serviceUuid = "4fafc201-1fb5-459e-8fcc-c5c9c331914b";
 let inputUuid = "beb5483e-36e1-4688-b7f5-ea07361b26a8";
 let outputUuid = "d2912856-de63-11ed-b5ea-0242ac120002";
+let switchUuid = "4e1c00da-57b6-4cfd-83f8-6b1e2beae05d";
 
 // 宣告一個包含兩個 UUID 的陣列
-let UuidTargets = [inputUuid, outputUuid];
+let UuidTargets = [inputUuid, outputUuid, switchUuid];
 let server;
 let service;
 
@@ -56,12 +74,60 @@ function speak(text) {
   synth.speak(utter)
 }
 
+async function UrbanPowerButtonClick() {
+  console.log("HIHI");
+  try {
+    // 傳送訊息
+    const message = "input off"; // 要傳送的UTF-8字串訊息
+    const encoder = new TextEncoder(); // 文字編碼器
+    const data = encoder.encode(message); // 將字串轉換為Uint8Array數據
+    let characteristicBle = await service.getCharacteristic(switchUuid);
+    await new Promise((resolve, reject) => {
+      characteristicBle.writeValue(data)
+        .then(() => {
+          console.log('訊息傳送成功');
+          resolve();
+        })
+        .catch((error) => {
+          console.error('Argh! ' + error);
+          reject(error);
+        });
+    });
+
+  } catch (error) {
+    log('Argh! ' + error);
+  }
+}
+
+async function SolarPowerSupplyClick() {
+  try {
+    // 傳送訊息
+    const message = "output off"; // 要傳送的UTF-8字串訊息
+    const encoder = new TextEncoder(); // 文字編碼器
+    const data = encoder.encode(message); // 將字串轉換為Uint8Array數據
+    let characteristicBle = await service.getCharacteristic(switchUuid);
+    await new Promise((resolve, reject) => {
+      characteristicBle.writeValue(data)
+        .then(() => {
+          console.log('訊息傳送成功');
+          resolve();
+        })
+        .catch((error) => {
+          console.error('Argh! ' + error);
+          reject(error);
+        });
+    });
+  } catch (error) {
+    log('Argh! ' + error);
+  }
+}
+
 async function onStartButtonClick() {
   try {
     log('Requesting Bluetooth Device...');
     const device = await navigator.bluetooth.requestDevice({
       // add newDD
-      optionalServices: [serviceUuid, inputUuid, outputUuid],
+      optionalServices: [serviceUuid, inputUuid, outputUuid, switchUuid],
       acceptAllDevices: true
     });
 
