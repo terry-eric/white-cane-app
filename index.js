@@ -37,14 +37,14 @@ function toggleColorBle() {
   if (button.classList.contains("btn-outline-secondary")) {
     button.classList.remove("btn-outline-secondary");
     button.classList.add("btn-outline-success");
-    button.innerHTML = "Solar Power Supply";
-    UrbanPowerButtonClick();
+    button.innerHTML = "mode 2";
+    mode1();
 
   } else {
     button.classList.remove("btn-outline-success");
     button.classList.add("btn-outline-secondary");
     button.innerHTML = "Urban Power Supply";
-    SolarPowerSupplyClick();
+    mode2();
   }
 }
 
@@ -74,8 +74,7 @@ function speak(text) {
   synth.speak(utter)
 }
 
-async function UrbanPowerButtonClick() {
-  console.log("HIHI");
+async function mode1() {
   try {
     // 傳送訊息
     const message = "input off"; // 要傳送的UTF-8字串訊息
@@ -99,7 +98,8 @@ async function UrbanPowerButtonClick() {
   }
 }
 
-async function SolarPowerSupplyClick() {
+async function mode2() {
+  console.log("NONO");
   try {
     // 傳送訊息
     const message = "output off"; // 要傳送的UTF-8字串訊息
