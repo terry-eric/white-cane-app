@@ -207,10 +207,10 @@ async function onStopButtonClick() {
 function callback(event) {
   // console.log(event.currentTarget)
   // console.log(event.currentTarget.uuid)
-  // if (event.currentTarget.uuid === voiceUuid){
-  //   let value = event.currentTarget.value;
-  //   speak(value);
-  // }
+  if (event.currentTarget.uuid === voiceUuid){
+    let value = event.currentTarget.value;
+    speak(value);
+  }
 
   if (event.currentTarget.uuid === inputUuid ||
     event.currentTarget.uuid === outputUuid) {
