@@ -210,6 +210,7 @@ function callback(event) {
   if (event.currentTarget.uuid === voiceUuid){
     let value = event.currentTarget.value;
     speak(value);
+    console.log("HIHI");
   }
 
   if (event.currentTarget.uuid === inputUuid ||
