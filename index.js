@@ -154,7 +154,7 @@ async function onStartButtonClick() {
       flag = true
     }
     speak('成功連接');
-    log('> Notifications started'); 
+    log('> Notifications started');
   } catch (error) {
     log('Argh! ' + error);
   }
@@ -207,9 +207,16 @@ async function onStopButtonClick() {
 function callback(event) {
   // console.log(event.currentTarget)
   // console.log(event.currentTarget.uuid)
-  if (event.currentTarget.uuid === voiceUuid){
+  if (event.currentTarget.uuid === voiceUuid) {
     let value = event.currentTarget.value;
-    speak(value);
+    let a = [];
+    for (let i = 0; i < value.byteLength; i++) {
+      a.push('0x' + ('00' + value.getUint8(i).toString(16)).slice(-2));
+    }
+    let voiceMode = parseInt(a, 16);
+    if (voiceMode) {
+      speak("你好");
+    }
     console.log(value);
   }
 
