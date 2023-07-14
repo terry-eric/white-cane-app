@@ -214,10 +214,16 @@ function callback(event) {
       a.push('0x' + ('00' + value.getUint8(i).toString(16)).slice(-2));
     }
     let voiceMode = parseInt(a, 16);
-    if (voiceMode) {
-      speak("你好");
+    if (voiceMode == 1) {
+      speak("直走");
     }
-    console.log(value);
+    if (voiceMode == 2) {
+      speak("左轉");
+    }
+    if (voiceMode == 3) {
+      speak("右轉");
+    }
+    console.log(voiceMode);
   }
 
   if (event.currentTarget.uuid === inputUuid ||
