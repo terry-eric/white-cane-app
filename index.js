@@ -126,7 +126,7 @@ async function onStartButtonClick() {
     log('Requesting Bluetooth Device...');
     const device = await navigator.bluetooth.requestDevice({
       // add newDD
-      optionalServices: [serviceUuid, inputUuid, outputUuid, switchUuid, voiceUuid],
+      optionalServices: [serviceUuid, inputUuid, outputUuid, voiceUuid],
       acceptAllDevices: true
     });
 
@@ -210,7 +210,7 @@ function callback(event) {
   if (event.currentTarget.uuid === voiceUuid){
     let value = event.currentTarget.value;
     speak(value);
-    console.log("HIHI");
+    console.log(value);
   }
 
   if (event.currentTarget.uuid === inputUuid ||
