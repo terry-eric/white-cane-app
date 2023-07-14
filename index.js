@@ -13,7 +13,6 @@ let flag = false;
 Btn.addEventListener("click", toggleColor);
 BtnBle.addEventListener("click", toggleColorBle);
 
-
 function toggleColor() {
   var button = document.getElementById("myButton");
   console.log(button);
@@ -37,17 +36,16 @@ function toggleColorBle() {
   if (button.classList.contains("btn-outline-secondary")) {
     button.classList.remove("btn-outline-secondary");
     button.classList.add("btn-outline-success");
-    button.innerHTML = "mode 2";
-    mode1();
+    button.innerHTML = "Mode 2";
+    Mode1();
 
   } else {
     button.classList.remove("btn-outline-success");
     button.classList.add("btn-outline-secondary");
-    button.innerHTML = "Urban Power Supply";
-    mode2();
+    button.innerHTML = "Mode 1";
+    Mode2();
   }
 }
-
 
 function log(text) {
   let log_ele = document.querySelector("#log")
@@ -61,9 +59,10 @@ let serviceUuid = "4fafc201-1fb5-459e-8fcc-c5c9c331914b";
 let inputUuid = "beb5483e-36e1-4688-b7f5-ea07361b26a8";
 let outputUuid = "d2912856-de63-11ed-b5ea-0242ac120002";
 let switchUuid = "4e1c00da-57b6-4cfd-83f8-6b1e2beae05d";
+let voiceUuid = "a0451b3a-f056-4ce5-bc13-0838e26b2d68";
 
 // 宣告一個包含兩個 UUID 的陣列
-let UuidTargets = [inputUuid, outputUuid, switchUuid];
+let UuidTargets = [inputUuid, outputUuid, switchUuid, voiceUuid];
 let server;
 let service;
 
@@ -74,7 +73,7 @@ function speak(text) {
   synth.speak(utter)
 }
 
-async function mode1() {
+async function Mode1() {
   try {
     // 傳送訊息
     const message = "input off"; // 要傳送的UTF-8字串訊息
@@ -98,7 +97,7 @@ async function mode1() {
   }
 }
 
-async function mode2() {
+async function Mode2() {
   console.log("NONO");
   try {
     // 傳送訊息
@@ -208,6 +207,11 @@ async function onStopButtonClick() {
 function callback(event) {
   // console.log(event.currentTarget)
   // console.log(event.currentTarget.uuid)
+  if (event.currentTarget.uuid === voiceUuid){
+    let value = event.currentTarget.value;
+    speak(value);
+  }
+
   if (event.currentTarget.uuid === inputUuid ||
     event.currentTarget.uuid === outputUuid) {
 
@@ -364,6 +368,3 @@ const intervalID = setInterval(() => {
     myChart.update(); // 更新圖表
   }
 }, 10);
-
-
-
