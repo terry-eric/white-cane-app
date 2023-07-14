@@ -56,13 +56,13 @@ function log(text) {
 
 // add new
 let serviceUuid = "4fafc201-1fb5-459e-8fcc-c5c9c331914b";
-let inputUuid = "beb5483e-36e1-4688-b7f5-ea07361b26a8";
-let outputUuid = "d2912856-de63-11ed-b5ea-0242ac120002";
+let accUuid = "beb5483e-36e1-4688-b7f5-ea07361b26a8";
+let gyroUuid = "d2912856-de63-11ed-b5ea-0242ac120002";
 let switchUuid = "4e1c00da-57b6-4cfd-83f8-6b1e2beae05d";
 let voiceUuid = "a0451b3a-f056-4ce5-bc13-0838e26b2d68";
 
 // 宣告一個包含兩個 UUID 的陣列
-let UuidTargets = [inputUuid, outputUuid, switchUuid, voiceUuid];
+let UuidTargets = [accUuid, gyroUuid, switchUuid, voiceUuid];
 let server;
 let service;
 
@@ -126,7 +126,7 @@ async function onStartButtonClick() {
     log('Requesting Bluetooth Device...');
     const device = await navigator.bluetooth.requestDevice({
       // add newDD
-      optionalServices: [serviceUuid, inputUuid, outputUuid, voiceUuid],
+      optionalServices: [serviceUuid, accUuid, gyroUuid, voiceUuid],
       acceptAllDevices: true
     });
 
@@ -226,8 +226,8 @@ function callback(event) {
     console.log(voiceMode);
   }
 
-  if (event.currentTarget.uuid === inputUuid ||
-    event.currentTarget.uuid === outputUuid) {
+  if (event.currentTarget.uuid === accUuid ||
+    event.currentTarget.uuid === gyroUuid) {
 
     let value = event.currentTarget.value;
     let a = [];
@@ -236,31 +236,25 @@ function callback(event) {
     }
     let bytes = a;
 
-    let busvoltage = bytes2int16([bytes[0], bytes[1]]) / 1000
-    let shuntvoltage = bytes2int16([bytes[2], bytes[3]]) / 100
-    let current = bytes2int16([bytes[4], bytes[5]]) / 1000
-    let loadvoltage = bytes2int16([bytes[6], bytes[7]]) / 100
-    let power_W = bytes2int16([bytes[8], bytes[9]]) / 10
+    let X = bytes2int16([bytes[0], bytes[1]])
+    let Y = bytes2int16([bytes[2], bytes[3]])
+    let Z = bytes2int16([bytes[4], bytes[5]])
 
-    if (event.currentTarget.uuid === inputUuid) {
-      document.getElementById("inputBusvoltage").innerHTML = busvoltage;
-      document.getElementById("inputShuntvoltage").innerHTML = shuntvoltage;
-      document.getElementById("inputCurrent").innerHTML = current;
-      document.getElementById("inputLoadvoltage").innerHTML = loadvoltage;
-      document.getElementById("inputPower").innerHTML = power_W;
-      inputData.push(["input", busvoltage, shuntvoltage, current, loadvoltage, power_W]);
-      if (chartType === "inputChart") { chartData = [busvoltage, shuntvoltage, current, loadvoltage, power_W] };
+    if (event.currentTarget.uuid === accUuid) {
+      document.getElementById("accX").innerHTML = X;
+      document.getElementById("accY").innerHTML = Y;
+      document.getElementById("accZ").innerHTML = Z;
+      inputData.push(["acc", X, Y, Z]);
+      if (chartType === "accChart") { chartData = [X, Y, Z] };
     }
-    if (event.currentTarget.uuid === outputUuid) {
-      document.getElementById("outputBusvoltage").innerHTML = busvoltage;
-      document.getElementById("outputShuntvoltage").innerHTML = shuntvoltage;
-      document.getElementById("outputCurrent").innerHTML = current;
-      document.getElementById("outputLoadvoltage").innerHTML = loadvoltage;
-      document.getElementById("outputPower").innerHTML = power_W;
-      outputData.push(["output", busvoltage, shuntvoltage, current, loadvoltage, power_W]);
-      if (chartType === "outputChart") { chartData = [busvoltage, shuntvoltage, current, loadvoltage, power_W] };
+    if (event.currentTarget.uuid === gyroUuid) {
+      document.getElementById("gyroX").innerHTML = X;
+      document.getElementById("gyroY").innerHTML = Y;
+      document.getElementById("gyroZ").innerHTML = Z;
+      outputData.push(["gyro", X, Y, Z]);
+      if (chartType === "gyroChart") { chartData = [X, Y, Z] };
     }
-    log(chartData.toString());
+    // log(chartData.toString());
   }
 }
 
@@ -300,7 +294,7 @@ var myChart = new Chart(ctx, {
     labels: labels,
     datasets: [
       {
-        label: 'busvoltage',
+        label: 'X',
         borderColor: 'red',
         backgroundColor: 'rgba(255, 0, 0, 0.1)',
         borderWidth: 1,
@@ -309,7 +303,7 @@ var myChart = new Chart(ctx, {
         cubicInterpolationMode: 'cubic'
       },
       {
-        label: 'shuntvoltage',
+        label: 'Y',
         borderColor: 'green',
         backgroundColor: 'rgba(0, 255, 0, 0.1)',
         borderWidth: 1,
@@ -318,26 +312,8 @@ var myChart = new Chart(ctx, {
         cubicInterpolationMode: 'cubic'
       },
       {
-        label: 'current',
+        label: 'Z',
         borderColor: 'blue',
-        backgroundColor: 'rgba(0, 0, 255, 0.1)',
-        borderWidth: 1,
-        data: [],
-        tension: 0.6,
-        cubicInterpolationMode: 'cubic'
-      },
-      {
-        label: 'loadvoltage',
-        borderColor: 'purple',
-        backgroundColor: 'rgba(0, 0, 255, 0.1)',
-        borderWidth: 1,
-        data: [],
-        tension: 0.6,
-        cubicInterpolationMode: 'cubic'
-      },
-      {
-        label: 'power_W',
-        borderColor: 'yellow',
         backgroundColor: 'rgba(0, 0, 255, 0.1)',
         borderWidth: 1,
         data: [],

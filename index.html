@@ -75,8 +75,8 @@
                 aria-label=".form-select-lg example">
 
             <option value="noneChart">選擇生成的圖表</option>
-            <option value="inputChart">輸入</option>
-            <option value="outputChart">輸出</option>
+            <option value="accChart">Accelerometer</option>
+            <option value="gyroChart">Gyroscope</option>
         </select>
         <div class="border border-3">
             <canvas id="myChart"
@@ -89,33 +89,23 @@
             <tbody>
                 <tr>
                     <th>#</th>
-                    <th>輸入</th>
-                    <th>輸出</th>
+                    <th>Accelerometer</th>
+                    <th>Gyroscope</th>
                 </tr>
                 <tr>
-                    <td>Busvoltage</td>
-                    <td><span id="inputBusvoltage">-1</span></td>
-                    <td><span id="outputBusvoltage">-1</span></td>
+                    <td>X</td>
+                    <td><span id="accX">-1</span></td>
+                    <td><span id="gyroX">-1</span></td>
                 </tr>
                 <tr>
-                    <td>Shuntvoltage</td>
-                    <td><span id="inputShuntvoltage">-1</span></td>
-                    <td><span id="outputShuntvoltage">-1</span></td>
+                    <td>Y</td>
+                    <td><span id="accY">-1</span></td>
+                    <td><span id="gyroY">-1</span></td>
                 </tr>
                 <tr>
-                    <td>Current</td>
-                    <td><span id="inputCurrent">-1</span></td>
-                    <td><span id="outputCurrent">-1</span></td>
-                </tr>
-                <tr>
-                    <td>Loadvoltage</td>
-                    <td><span id="inputLoadvoltage">-1</span></td>
-                    <td><span id="outputLoadvoltage">-1</span></td>
-                </tr>
-                <tr>
-                    <td>Power</td>
-                    <td><span id="inputPower">-1</span></td>
-                    <td><span id="outputPower">-1</span></td>
+                    <td>Z</td>
+                    <td><span id="accZ">-1</span></td>
+                    <td><span id="gyroZ">-1</span></td>
                 </tr>
             </tbody>
         </table>
