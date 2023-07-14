@@ -126,7 +126,7 @@ async function onStartButtonClick() {
     log('Requesting Bluetooth Device...');
     const device = await navigator.bluetooth.requestDevice({
       // add newDD
-      optionalServices: [serviceUuid, inputUuid, outputUuid, switchUuid],
+      optionalServices: [serviceUuid, inputUuid, outputUuid, switchUuid, voiceUuid],
       acceptAllDevices: true
     });
 
