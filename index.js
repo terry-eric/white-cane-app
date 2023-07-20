@@ -220,10 +220,10 @@ function callback(event) {
       speak("直走");
     }
     if (voiceMode == 2) {
-      speak("左轉");
+      speak("靠左前行");
     }
     if (voiceMode == 3) {
-      speak("右轉");
+      speak("靠右前行");
     }
     console.log(voiceMode);
   }
