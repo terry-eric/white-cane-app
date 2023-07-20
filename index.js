@@ -128,7 +128,8 @@ async function onStartButtonClick() {
     const device = await navigator.bluetooth.requestDevice({
       // add newDD
       optionalServices: [serviceUuid, accUuid, gyroUuid, voiceUuid],
-      acceptAllDevices: true
+      // acceptAllDevices: true
+      filters: [{name: "WhiteCane"}]
     });
 
     log('Connecting to GATT Server...');
