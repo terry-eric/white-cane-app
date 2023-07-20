@@ -55,7 +55,8 @@ function log(text) {
 }
 
 // add new
-let serviceUuid = "4fafc201-1fb5-459e-8fcc-c5c9c331914b";
+let serviceUuid = 0x181A;
+// let serviceUuid = "4fafc201-1fb5-459e-8fcc-c5c9c331914b";
 let accUuid = "beb5483e-36e1-4688-b7f5-ea07361b26a8";
 let gyroUuid = "d2912856-de63-11ed-b5ea-0242ac120002";
 let switchUuid = "4e1c00da-57b6-4cfd-83f8-6b1e2beae05d";
