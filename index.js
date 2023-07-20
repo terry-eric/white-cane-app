@@ -238,9 +238,9 @@ function callback(event) {
     }
     let bytes = a;
 
-    let X = bytes2int16([bytes[0], bytes[1]])
-    let Y = bytes2int16([bytes[2], bytes[3]])
-    let Z = bytes2int16([bytes[4], bytes[5]])
+    let X = bytes2int16([bytes[0], bytes[1]])/100
+    let Y = bytes2int16([bytes[2], bytes[3]])/100
+    let Z = bytes2int16([bytes[4], bytes[5]])/100
 
     if (event.currentTarget.uuid === accUuid) {
       document.getElementById("accX").innerHTML = X;
