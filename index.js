@@ -1,4 +1,4 @@
-const inputData = [], outputData = [];
+const Acc = [], Gyro = [];
 let chartType = "noneChart";
 let chartData = [];
 let flag = false;
