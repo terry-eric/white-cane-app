@@ -2,6 +2,7 @@ const inputData = [], outputData = [];
 let chartType = "noneChart";
 let chartData = [];
 let flag = false;
+let device;
 
 var btnConnection = document.getElementById("myButton");
 var btnMode = document.getElementById("bleButton");
@@ -116,7 +117,7 @@ async function Mode2() {
 async function onStartButtonClick() {
   try {
     log('Requesting Bluetooth Device...');
-    const device = await navigator.bluetooth.requestDevice({
+    device = await navigator.bluetooth.requestDevice({
       // add newDD
       optionalServices: [serviceUuid, accUuid, gyroUuid, voiceUuid],
       // acceptAllDevices: true
@@ -361,7 +362,7 @@ const intervalID = setInterval(() => {
 }, 10);
 
 setInterval(async () => {
-  const isConnected = await bleManager.isDeviceConnected(deviceId);
+  const isConnected = await device.isDeviceConnected(deviceId);
   log(isConnected);
   if (!isConnected) {
     onStopButtonClick();
