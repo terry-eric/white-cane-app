@@ -17,9 +17,9 @@ function toggleColor() {
   var button = document.getElementById("myButton");
   console.log(button);
   if (button.classList.contains("btn-outline-primary")) {
-    button.classList.remove("btn-outline-primary");
-    button.classList.add("btn-outline-danger");
-    button.innerHTML = "STOP";
+    // button.classList.remove("btn-outline-primary");
+    // button.classList.add("btn-outline-danger");
+    // button.innerHTML = "STOP";
     onStartButtonClick();
 
   } else {
@@ -157,7 +157,12 @@ async function onStartButtonClick() {
     }
     speak('成功連接');
     log('> Notifications started');
+    
+    button.classList.remove("btn-outline-primary");
+    button.classList.add("btn-outline-danger");
+    button.innerHTML = "STOP";
   } catch (error) {
+    speak('連接錯誤，請重新連接');
     log('Argh! ' + error);
   }
 }
