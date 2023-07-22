@@ -149,7 +149,7 @@ async function onStartButtonClick() {
     }
     device.addEventListener('gattserverdisconnected', function () {
       speak('藍芽連接錯誤');
-      onStopButtonClick();
+      connect();
     });
     speak('成功連接');
     log('> Notifications started');
@@ -177,10 +177,9 @@ async function onStopButtonClick() {
     await server.disconnect(); // 需要手動斷開 GATT 伺服器的連線
 
     log('> Notifications stopped');
-    const sensordata = [inputData, outputData];
-    // const sensordata = [outputData];
+    const sensordata = [Acc, Gyro];
     for (i of sensordata) {
-      let header = ["busvoltage", "shuntvoltage", "current", "loadvoltage", "power_W"].join(",")
+      let header = [`${sensordata[i]}x`,`${sensordata[i]}y`, `${sensordata[i]}z`].join(",")
       let csv = i.map(row => {
         let data = row.slice(1)
         data.join(',')
@@ -366,11 +365,39 @@ const intervalID = setInterval(() => {
 }, 10);
 
 
-// setInterval(async () => {
-//   const isConnected = await device.isDeviceConnected(deviceId);
-//   log(isConnected);
-//   if (!isConnected) {
-//     onStopButtonClick();
-//     speak('裝置連線錯誤請重新連接');
-//   }
-// }, 1000);
+async function connect() {
+  exponentialBackoff(3 /* max retries */, 2 /* seconds delay */,
+    async function toTry() {
+      time('Connecting to Bluetooth Device... ');
+      await device.gatt.connect();
+    },
+    function success() {
+      log('> Bluetooth Device connected. Try disconnect it now.');
+    },
+    function fail() {
+      time('Failed to reconnect.');
+    });
+}
+/* Utils */
+
+// This function keeps calling "toTry" until promise resolves or has
+// retried "max" number of times. First retry has a delay of "delay" seconds.
+// "success" is called upon success.
+async function exponentialBackoff(max, delay, toTry, success, fail) {
+  try {
+    const result = await toTry();
+    success(result);
+  } catch(error) {
+    if (max === 0) {
+      return fail();
+    }
+    time('Retrying in ' + delay + 's... (' + max + ' tries left)');
+    setTimeout(function() {
+      exponentialBackoff(--max, delay * 2, toTry, success, fail);
+    }, delay * 1000);
+  }
+}
+
+function time(text) {
+  log('[' + new Date().toJSON().substring(11, 8) + '] ' + text);
+}
