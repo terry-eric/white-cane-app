@@ -12,9 +12,10 @@ let flag = false;
 // stopBtn.addEventListener("click", onStopButtonClick);
 Btn.addEventListener("click", toggleColor);
 BtnBle.addEventListener("click", toggleColorBle);
+var button;
 
 function toggleColor() {
-  var button = document.getElementById("myButton");
+  button = document.getElementById("myButton");
   console.log(button);
   if (button.classList.contains("btn-outline-primary")) {
     // button.classList.remove("btn-outline-primary");
@@ -157,8 +158,7 @@ async function onStartButtonClick() {
     }
     speak('成功連接');
     log('> Notifications started');
-    
-    var button = document.getElementById("myButton");
+
     button.classList.remove("btn-outline-primary");
     button.classList.add("btn-outline-danger");
     button.innerHTML = "STOP";
