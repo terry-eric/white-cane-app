@@ -147,6 +147,10 @@ async function onStartButtonClick() {
 
       flag = true
     }
+    device.addEventListener('gattserverdisconnected', function () {
+      speak('藍芽連接錯誤');
+      onStopButtonClick();
+    });
     speak('成功連接');
     log('> Notifications started');
 
@@ -361,11 +365,12 @@ const intervalID = setInterval(() => {
   }
 }, 10);
 
-setInterval(async () => {
-  const isConnected = await device.isDeviceConnected(deviceId);
-  log(isConnected);
-  if (!isConnected) {
-    onStopButtonClick();
-    speak('裝置連線錯誤請重新連接');
-  }
-}, 1000);
+
+// setInterval(async () => {
+//   const isConnected = await device.isDeviceConnected(deviceId);
+//   log(isConnected);
+//   if (!isConnected) {
+//     onStopButtonClick();
+//     speak('裝置連線錯誤請重新連接');
+//   }
+// }, 1000);
