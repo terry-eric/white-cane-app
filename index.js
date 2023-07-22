@@ -1,46 +1,39 @@
 const inputData = [], outputData = [];
-// let startBtn = document.querySelector('#start');
-// let stopBtn = document.querySelector('#stop');
-let Btn = document.querySelector('#myButton');
-let BtnBle = document.querySelector('#bleButton');
-
-let chartType = "noneChart";////
+let chartType = "noneChart";
 let chartData = [];
 let flag = false;
 
-// startBtn.addEventListener("click", onStartButtonClick);
-// stopBtn.addEventListener("click", onStopButtonClick);
-Btn.addEventListener("click", toggleColor);
-BtnBle.addEventListener("click", toggleColorBle);
-var buttonConnection = document.getElementById("myButton");;
-var buttonMode = document.getElementById("bleButton");;
+var btnConnection = document.getElementById("myButton");
+var btnMode = document.getElementById("bleButton");
+btnConnection.addEventListener("click", toggleColor);
+btnMode.addEventListener("click", toggleColorBle);
 
 function toggleColor() {
-  if (buttonConnection.classList.contains("btn-outline-primary")) {
+  if (btnConnection.classList.contains("btn-outline-primary")) {
     // buttonConnection.classList.remove("btn-outline-primary");
     // buttonConnection.classList.add("btn-outline-danger");
     // buttonConnection.innerHTML = "STOP";
     onStartButtonClick();
 
   } else {
-    buttonConnection.classList.remove("btn-outline-danger");
-    buttonConnection.classList.add("btn-outline-primary");
-    buttonConnection.innerHTML = "START";
+    btnConnection.classList.remove("btn-outline-danger");
+    btnConnection.classList.add("btn-outline-primary");
+    btnConnection.innerHTML = "START";
     onStopButtonClick();
   }
 }
 
 function toggleColorBle() {
-  if (buttonMode.classList.contains("btn-outline-secondary")) {
-    buttonMode.classList.remove("btn-outline-secondary");
-    buttonMode.classList.add("btn-outline-success");
-    buttonMode.innerHTML = "Mode 2";
+  if (btnMode.classList.contains("btn-outline-secondary")) {
+    btnMode.classList.remove("btn-outline-secondary");
+    btnMode.classList.add("btn-outline-success");
+    btnMode.innerHTML = "Mode 2";
     Mode1();
 
   } else {
-    buttonMode.classList.remove("btn-outline-success");
-    buttonMode.classList.add("btn-outline-secondary");
-    buttonMode.innerHTML = "Mode 1";
+    btnMode.classList.remove("btn-outline-success");
+    btnMode.classList.add("btn-outline-secondary");
+    btnMode.innerHTML = "Mode 1";
     Mode2();
   }
 }
@@ -156,9 +149,9 @@ async function onStartButtonClick() {
     speak('成功連接');
     log('> Notifications started');
 
-    buttonConnection.classList.remove("btn-outline-primary");
-    buttonConnection.classList.add("btn-outline-danger");
-    buttonConnection.innerHTML = "STOP";
+    btnConnection.classList.remove("btn-outline-primary");
+    btnConnection.classList.add("btn-outline-danger");
+    btnConnection.innerHTML = "STOP";
   } catch (error) {
     speak('連接錯誤，請重新連接');
     log('Argh! ' + error);
