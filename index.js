@@ -362,6 +362,7 @@ const intervalID = setInterval(() => {
 
 setInterval(async () => {
   const isConnected = await bleManager.isDeviceConnected(deviceId);
+  log(isConnected);
   if (!isConnected) {
     onStopButtonClick();
     speak('裝置連線錯誤請重新連接');
