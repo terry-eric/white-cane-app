@@ -158,6 +158,7 @@ async function onStartButtonClick() {
     speak('成功連接');
     log('> Notifications started');
     
+    var button = document.getElementById("myButton");
     button.classList.remove("btn-outline-primary");
     button.classList.add("btn-outline-danger");
     button.innerHTML = "STOP";
