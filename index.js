@@ -115,6 +115,9 @@ async function Mode2() {
 }
 
 async function onStartButtonClick() {
+  btnConnection.classList.remove("btn-outline-primary");
+  btnConnection.classList.add("btn-outline-danger");
+  btnConnection.innerHTML = "STOP";
   try {
     log('Requesting Bluetooth Device...');
     device = await navigator.bluetooth.requestDevice({
@@ -153,10 +156,6 @@ async function onStartButtonClick() {
     });
     speak('成功連接');
     log('> Notifications started');
-
-    btnConnection.classList.remove("btn-outline-primary");
-    btnConnection.classList.add("btn-outline-danger");
-    btnConnection.innerHTML = "STOP";
   } catch (error) {
     speak('連接錯誤，請重新連接');
     log('Argh! ' + error);
