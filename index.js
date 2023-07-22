@@ -126,38 +126,18 @@ async function onStartButtonClick() {
       // acceptAllDevices: true
       filters: [{name: "WhiteCane"}]
     });
-    device.addEventListener('gattserverdisconnected', function () {
-      speak('藍芽連接錯誤，重新連接中');
-      connect();
-    });
+    device.addEventListener('gattserverdisconnected', toConnect);
     connect();
-    // log('Connecting to GATT Server...');
-    // server = await device.gatt.connect();
 
-    // log('Getting Service...');
-    // service = await server.getPrimaryService(serviceUuid);
-
-    // log('Getting Characteristic...');
-    // // add new
-
-    // // 使用 for...of 迴圈遍歷陣列中的元素，取得每個 UUID 對應的 characteristic 並啟用通知
-    // for (const [index, UuidTarget] of UuidTargets.entries()) {
-
-    //   // 使用 service.getCharacteristic() 方法來取得指定 UUID 對應的 characteristic
-    //   let characteristicTarget = await service.getCharacteristic(UuidTarget);
-
-    //   // 當 characteristic 的值發生改變時，執行 callback 函數
-    //   characteristicTarget.addEventListener("characteristicvaluechanged", callback);
-
-    //   // 啟用 characteristic 的通知功能，這樣當 characteristic 的值改變時，就會發送通知
-    //   await characteristicTarget.startNotifications();
-
-    //   flag = true
-    // }
   } catch (error) {
     speak('連接錯誤，請重新連接');
     log('Argh! ' + error);
   }
+}
+
+let toConnect = function(){
+  speak('藍芽連接錯誤，重新連接中');
+  connect();
 }
 
 async function onStopButtonClick() {
@@ -170,8 +150,9 @@ async function onStopButtonClick() {
       characteristicTarget.removeEventListener('characteristicvaluechanged',
         callback);
     }
-    speak('已斷開連接');
+    device.removeEventListener('gattserverdisconnected', toConnect);
     await server.disconnect(); // 需要手動斷開 GATT 伺服器的連線
+    speak('已斷開連接');
 
     log('> Notifications stopped');
     const sensordata = [Acc, Gyro];
