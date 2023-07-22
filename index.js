@@ -16,9 +16,9 @@ function toggleColor() {
     onStartButtonClick();
 
   } else {
-    btnConnection.classList.remove("btn-outline-danger");
-    btnConnection.classList.add("btn-outline-primary");
-    btnConnection.innerHTML = "START";
+    // btnConnection.classList.remove("btn-outline-danger");
+    // btnConnection.classList.add("btn-outline-primary");
+    // btnConnection.innerHTML = "START";
     onStopButtonClick();
   }
 }
@@ -195,6 +195,9 @@ async function onStopButtonClick() {
       a.click();
       document.body.removeChild(a);
       URL.revokeObjectURL(url);
+      btnConnection.classList.remove("btn-outline-danger");
+      btnConnection.classList.add("btn-outline-primary");
+      btnConnection.innerHTML = "START";
     }
   } catch (error) {
     console.error(error)
@@ -356,3 +359,11 @@ const intervalID = setInterval(() => {
     myChart.update(); // 更新圖表
   }
 }, 10);
+
+setInterval(async () => {
+  const isConnected = await bleManager.isDeviceConnected(deviceId);
+  if (!isConnected) {
+    onStopButtonClick();
+    speak('裝置連線錯誤請重新連接');
+  }
+}, 1000);
