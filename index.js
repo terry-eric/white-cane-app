@@ -12,38 +12,35 @@ let flag = false;
 // stopBtn.addEventListener("click", onStopButtonClick);
 Btn.addEventListener("click", toggleColor);
 BtnBle.addEventListener("click", toggleColorBle);
-var button;
+var buttonConnection = document.getElementById("myButton");;
+var buttonMode = document.getElementById("bleButton");;
 
 function toggleColor() {
-  button = document.getElementById("myButton");
-  console.log(button);
-  if (button.classList.contains("btn-outline-primary")) {
-    // button.classList.remove("btn-outline-primary");
-    // button.classList.add("btn-outline-danger");
-    // button.innerHTML = "STOP";
+  if (buttonConnection.classList.contains("btn-outline-primary")) {
+    // buttonConnection.classList.remove("btn-outline-primary");
+    // buttonConnection.classList.add("btn-outline-danger");
+    // buttonConnection.innerHTML = "STOP";
     onStartButtonClick();
 
   } else {
-    button.classList.remove("btn-outline-danger");
-    button.classList.add("btn-outline-primary");
-    button.innerHTML = "START";
+    buttonConnection.classList.remove("btn-outline-danger");
+    buttonConnection.classList.add("btn-outline-primary");
+    buttonConnection.innerHTML = "START";
     onStopButtonClick();
   }
 }
 
 function toggleColorBle() {
-  var button = document.getElementById("bleButton");
-  console.log(button);
-  if (button.classList.contains("btn-outline-secondary")) {
-    button.classList.remove("btn-outline-secondary");
-    button.classList.add("btn-outline-success");
-    button.innerHTML = "Mode 2";
+  if (buttonMode.classList.contains("btn-outline-secondary")) {
+    buttonMode.classList.remove("btn-outline-secondary");
+    buttonMode.classList.add("btn-outline-success");
+    buttonMode.innerHTML = "Mode 2";
     Mode1();
 
   } else {
-    button.classList.remove("btn-outline-success");
-    button.classList.add("btn-outline-secondary");
-    button.innerHTML = "Mode 1";
+    buttonMode.classList.remove("btn-outline-success");
+    buttonMode.classList.add("btn-outline-secondary");
+    buttonMode.innerHTML = "Mode 1";
     Mode2();
   }
 }
@@ -159,9 +156,9 @@ async function onStartButtonClick() {
     speak('成功連接');
     log('> Notifications started');
 
-    button.classList.remove("btn-outline-primary");
-    button.classList.add("btn-outline-danger");
-    button.innerHTML = "STOP";
+    buttonConnection.classList.remove("btn-outline-primary");
+    buttonConnection.classList.add("btn-outline-danger");
+    buttonConnection.innerHTML = "STOP";
   } catch (error) {
     speak('連接錯誤，請重新連接');
     log('Argh! ' + error);
