@@ -175,6 +175,7 @@ async function onStopButtonClick() {
       wakeLock.removeEventListener('release', screenRrelease);
       document.removeEventListener('visibilitychange', reWakeScreen);
       wakeLock.release().then(() => wakeLock = null);
+      console.log('release wake lock')
     }
     // 停止所有 characteristic 的通知功能
     for (const [index, UuidTarget] of UuidTargets.entries()) {
