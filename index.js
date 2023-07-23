@@ -227,14 +227,14 @@ function callback(event) {
       document.getElementById("accX").innerHTML = X;
       document.getElementById("accY").innerHTML = Y;
       document.getElementById("accZ").innerHTML = Z;
-      inputData.push(["acc", X, Y, Z]);
+      Acc.push(["acc", X, Y, Z]);
       if (chartType === "accChart") { chartData = [X, Y, Z] };
     }
     if (event.currentTarget.uuid === gyroUuid) {
       document.getElementById("gyroX").innerHTML = X;
       document.getElementById("gyroY").innerHTML = Y;
       document.getElementById("gyroZ").innerHTML = Z;
-      outputData.push(["gyro", X, Y, Z]);
+      Gyro.push(["gyro", X, Y, Z]);
       if (chartType === "gyroChart") { chartData = [X, Y, Z] };
     }
     // log(chartData.toString());
