@@ -140,7 +140,8 @@ async function onStartButtonClick() {
       wakeLock.addEventListener('release', screenRrelease);
       document.addEventListener('visibilitychange', reWakeScreen);
     }
-
+    console.log(canWakeLock);
+    console.log('canWakeLock');
   } catch (error) {
     speak('連接錯誤，請重新連接');
     log('Argh! ' + error);
@@ -153,7 +154,7 @@ let screenRrelease = function () {
 let reWakeScreen = async function () {
   if (wakeLock !== null && document.visibilityState === 'visible') {
     requestWakeLock()
-}
+  }
 }
 
 
@@ -163,15 +164,18 @@ let toConnect = function () {
 }
 
 async function onStopButtonClick() {
-  flag = false
+  btnConnection.classList.remove("btn-outline-danger");
+  btnConnection.classList.add("btn-outline-primary");
+  btnConnection.innerHTML = "START";
 
-  if (canWakeLock == true) {
-    wakeLock.removeEventListener('release', screenRrelease);
-    document.removeEventListener('visibilitychange', reWakeScreen);
-    wakeLock.release().then(() => wakeLock = null);
-  }
+  flag = false;
 
   try {
+    if (canWakeLock == true) {
+      wakeLock.removeEventListener('release', screenRrelease);
+      document.removeEventListener('visibilitychange', reWakeScreen);
+      wakeLock.release().then(() => wakeLock = null);
+    }
     // 停止所有 characteristic 的通知功能
     for (const [index, UuidTarget] of UuidTargets.entries()) {
       const characteristicTarget = await service.getCharacteristic(UuidTarget);
@@ -206,9 +210,6 @@ async function onStopButtonClick() {
       a.click();
       document.body.removeChild(a);
       URL.revokeObjectURL(url);
-      btnConnection.classList.remove("btn-outline-danger");
-      btnConnection.classList.add("btn-outline-primary");
-      btnConnection.innerHTML = "START";
     }
   } catch (error) {
     console.error(error)
@@ -358,8 +359,6 @@ const intervalID = setInterval(() => {
       myChart.data.datasets.forEach((dataset, index) => {
         dataset.data.push(chartData[index]);
       });
-    } else {
-      console.log("hi");
     }
     myChart.update(); // 更新圖表
   }
