@@ -140,8 +140,6 @@ async function onStartButtonClick() {
       wakeLock.addEventListener('release', screenRrelease);
       document.addEventListener('visibilitychange', reWakeScreen);
     }
-    console.log(canWakeLock);
-    console.log('canWakeLock');
   } catch (error) {
     speak('連接錯誤，請重新連接');
     log('Argh! ' + error);
