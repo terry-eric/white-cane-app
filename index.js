@@ -137,7 +137,7 @@ async function onStartButtonClick() {
     if (canWakeLock == true) {
       requestWakeLock();
       //check Wake Lock 
-      wakeLock.addEventListener('release', screenRrelease);
+      // wakeLock.addEventListener('release', screenRrelease);
       document.addEventListener('visibilitychange', reWakeScreen);
     }
   } catch (error) {
@@ -189,7 +189,7 @@ async function onStopButtonClick() {
     log('> Notifications stopped');
     const sensordata = [Acc, Gyro];
     for (i of sensordata) {
-      let header = [`${sensordata[i]}x`, `${sensordata[i]}y`, `${sensordata[i]}z`].join(",")
+      let header = ['X','Y', 'Z'].join(",")
       let csv = i.map(row => {
         let data = row.slice(1)
         data.join(',')
