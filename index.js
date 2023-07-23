@@ -137,7 +137,7 @@ async function onStartButtonClick() {
     if (canWakeLock == true) {
       requestWakeLock();
       //check Wake Lock 
-      // wakeLock.addEventListener('release', screenRrelease);
+      wakeLock.addEventListener('release', screenRrelease);
       document.addEventListener('visibilitychange', reWakeScreen);
     }
   } catch (error) {
@@ -156,7 +156,7 @@ let reWakeScreen = async function () {
 }
 
 
-let toConnect = function () {
+let toConnect = async function () {
   speak('藍芽連接錯誤，重新連接中');
   connect();
 }
