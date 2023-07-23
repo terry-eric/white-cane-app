@@ -48,6 +48,8 @@ function log(text) {
 
 // add new
 let serviceUuid = 0x181A;
+//screen keep wake 
+let canWakeLock = () => 'wakeLock' in navigator;
 // let serviceUuid = "4fafc201-1fb5-459e-8fcc-c5c9c331914b";
 let accUuid = "beb5483e-36e1-4688-b7f5-ea07361b26a8";
 let gyroUuid = "d2912856-de63-11ed-b5ea-0242ac120002";
@@ -114,20 +116,30 @@ async function Mode2() {
   }
 }
 
+
 async function onStartButtonClick() {
   btnConnection.classList.remove("btn-outline-primary");
   btnConnection.classList.add("btn-outline-danger");
   btnConnection.innerHTML = "STOP";
+
   try {
     log('Requesting Bluetooth Device...');
     device = await navigator.bluetooth.requestDevice({
       // add newDD
       optionalServices: [serviceUuid, accUuid, gyroUuid, voiceUuid],
       // acceptAllDevices: true
-      filters: [{name: "WhiteCane"}]
+      filters: [{ name: "WhiteCane" }]
     });
     device.addEventListener('gattserverdisconnected', toConnect);
     connect();
+
+    //when the code is ready, then screen keep wake 
+    if (canWakeLock == true) {
+      requestWakeLock();
+      //check Wake Lock 
+      wakeLock.addEventListener('release', screenRrelease);
+      document.addEventListener('visibilitychange', reWakeScreen);
+    }
 
   } catch (error) {
     speak('連接錯誤，請重新連接');
@@ -135,13 +147,30 @@ async function onStartButtonClick() {
   }
 }
 
-let toConnect = function(){
+let screenRrelease = function () {
+  console.log('Wake Lock has been released');
+}
+let reWakeScreen = async function () {
+  if (wakeLock !== null && document.visibilityState === 'visible') {
+    requestWakeLock()
+}
+}
+
+
+let toConnect = function () {
   speak('藍芽連接錯誤，重新連接中');
   connect();
 }
 
 async function onStopButtonClick() {
   flag = false
+
+  if (canWakeLock == true) {
+    wakeLock.removeEventListener('release', screenRrelease);
+    document.removeEventListener('visibilitychange', reWakeScreen);
+    wakeLock.release().then(() => wakeLock = null);
+  }
+
   try {
     // 停止所有 characteristic 的通知功能
     for (const [index, UuidTarget] of UuidTargets.entries()) {
@@ -157,7 +186,7 @@ async function onStopButtonClick() {
     log('> Notifications stopped');
     const sensordata = [Acc, Gyro];
     for (i of sensordata) {
-      let header = [`${sensordata[i]}x`,`${sensordata[i]}y`, `${sensordata[i]}z`].join(",")
+      let header = [`${sensordata[i]}x`, `${sensordata[i]}y`, `${sensordata[i]}z`].join(",")
       let csv = i.map(row => {
         let data = row.slice(1)
         data.join(',')
@@ -219,9 +248,9 @@ function callback(event) {
     }
     let bytes = a;
 
-    let X = bytes2int16([bytes[0], bytes[1]])/100
-    let Y = bytes2int16([bytes[2], bytes[3]])/100
-    let Z = bytes2int16([bytes[4], bytes[5]])/100
+    let X = bytes2int16([bytes[0], bytes[1]]) / 100
+    let Y = bytes2int16([bytes[2], bytes[3]]) / 100
+    let Z = bytes2int16([bytes[4], bytes[5]]) / 100
 
     if (event.currentTarget.uuid === accUuid) {
       document.getElementById("accX").innerHTML = X;
@@ -246,12 +275,6 @@ function bytes2int16(bytes) {
   view.setUint8(0, bytes[1]);
   view.setUint8(1, bytes[0]);
   return view.getInt16(0, true); // true indicates little-endian byte order
-}
-// function bytes2int16(high, low) {
-//   return (low << 8) | high
-// }
-function bytes4int32(one, two, three, four) {
-  return (((four << 8) | three) << 16) | ((two << 8) | one)
 }
 
 var select = document.getElementById('dataChart');
@@ -349,25 +372,25 @@ async function connect() {
       time('Connecting to Bluetooth Device... ');
       log('Connecting to GATT Server...');
       server = await device.gatt.connect();
-  
+
       log('Getting Service...');
       service = await server.getPrimaryService(serviceUuid);
-  
+
       log('Getting Characteristic...');
       // add new
-  
+
       // 使用 for...of 迴圈遍歷陣列中的元素，取得每個 UUID 對應的 characteristic 並啟用通知
       for (const [index, UuidTarget] of UuidTargets.entries()) {
-  
+
         // 使用 service.getCharacteristic() 方法來取得指定 UUID 對應的 characteristic
         let characteristicTarget = await service.getCharacteristic(UuidTarget);
-  
+
         // 當 characteristic 的值發生改變時，執行 callback 函數
         characteristicTarget.addEventListener("characteristicvaluechanged", callback);
-  
+
         // 啟用 characteristic 的通知功能，這樣當 characteristic 的值改變時，就會發送通知
         await characteristicTarget.startNotifications();
-     
+
         flag = true
       }
     },
@@ -378,7 +401,7 @@ async function connect() {
     },
     function fail() {
       time('Failed to reconnect.');
-      
+
     });
 }
 /* Utils */
@@ -391,12 +414,12 @@ async function exponentialBackoff(max, delay, toTry, success, fail) {
     const result = await toTry();
     success(result);
     console.log(result);
-  } catch(error) {
+  } catch (error) {
     if (max === 0) {
       return fail();
     }
     time('Retrying in ' + delay + 's... (' + max + ' tries left)');
-    setTimeout(function() {
+    setTimeout(function () {
       exponentialBackoff(--max, delay * 2, toTry, success, fail);
     }, delay * 1000);
   }
@@ -405,3 +428,13 @@ async function exponentialBackoff(max, delay, toTry, success, fail) {
 function time(text) {
   log('[' + new Date().toJSON().substring(11, 8) + '] ' + text);
 }
+
+let wakeLock = null; const requestWakeLock = async () => {
+  try {
+    wakeLock = await navigator.wakeLock.request('screen');
+    console.log('Wake Lock is active!');
+  } catch (err) {
+    console.log(`${err.name}, ${err.message}`);
+  }
+}
+
