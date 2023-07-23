@@ -11,15 +11,8 @@ btnMode.addEventListener("click", toggleColorBle);
 
 function toggleColor() {
   if (btnConnection.classList.contains("btn-outline-primary")) {
-    // buttonConnection.classList.remove("btn-outline-primary");
-    // buttonConnection.classList.add("btn-outline-danger");
-    // buttonConnection.innerHTML = "STOP";
     onStartButtonClick();
-
   } else {
-    // btnConnection.classList.remove("btn-outline-danger");
-    // btnConnection.classList.add("btn-outline-primary");
-    // btnConnection.innerHTML = "START";
     onStopButtonClick();
   }
 }
@@ -137,7 +130,7 @@ async function onStartButtonClick() {
     if (canWakeLock == true) {
       requestWakeLock();
       //check Wake Lock 
-      wakeLock.addEventListener('release', screenRrelease);
+      // wakeLock.addEventListener('release', screenRrelease);
       document.addEventListener('visibilitychange', reWakeScreen);
     }
   } catch (error) {
@@ -146,7 +139,7 @@ async function onStartButtonClick() {
   }
 }
 
-let screenRrelease = function () {
+let screenRrelease = async function () {
   console.log('Wake Lock has been released');
 }
 let reWakeScreen = async function () {
@@ -156,7 +149,7 @@ let reWakeScreen = async function () {
 }
 
 
-let toConnect = async function () {
+let toConnect = function () {
   speak('藍芽連接錯誤，重新連接中');
   connect();
 }
