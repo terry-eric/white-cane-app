@@ -282,9 +282,9 @@ select.addEventListener('change', (event) => {
 });
 
 var ctx = document.getElementById('myChart');
-var maxDataPoints = 100; // 最多顯示1000筆資料
+var maxDataPoints = 100; // 最多顯示100筆資料
 const labels = [];
-for (let i = 0; i <= maxDataPoints; i++) {
+for (let i = 0; i <= maxDataPoints; i+=20) {
   labels.push(i.toString());
 }
 var myChart = new Chart(ctx, {
@@ -299,7 +299,8 @@ var myChart = new Chart(ctx, {
         borderWidth: 1,
         data: [],
         tension: 0.6,
-        cubicInterpolationMode: 'cubic'
+        cubicInterpolationMode: 'cubic',
+        yAxisID: 'myScale' // 將X資料集連接到myScale Y軸
       },
       {
         label: 'Y',
@@ -308,7 +309,8 @@ var myChart = new Chart(ctx, {
         borderWidth: 1,
         data: [],
         tension: 0.6,
-        cubicInterpolationMode: 'cubic'
+        cubicInterpolationMode: 'cubic',
+        yAxisID: 'myScale' // 將X資料集連接到myScale Y軸
       },
       {
         label: 'Z',
@@ -317,18 +319,36 @@ var myChart = new Chart(ctx, {
         borderWidth: 1,
         data: [],
         tension: 0.6,
-        cubicInterpolationMode: 'cubic'
+        cubicInterpolationMode: 'cubic',
+        yAxisID: 'myScale' // 將X資料集連接到myScale Y軸
       },
     ]
   },
   options: {
+    layout: {
+      padding: {
+          right: 10
+      }
+  },
     animation: false,
     scales: {
-      yAxes: [{
+      x: {
+        grid: {
+          color: "#ffffff"
+        },
         ticks: {
-          beginAtZero: true
+          color: "#ffffff"
+        },
+      },
+      myScale: {
+        position: 'left',
+        grid: {
+          color: "#ffffff"
+        },
+        ticks: {
+          color: "#ffffff",
         }
-      }]
+      }
     }
   }
 });
