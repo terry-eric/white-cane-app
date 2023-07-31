@@ -2,6 +2,7 @@
 <html lang="zh">
 
 <head>
+    <title>Document</title>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible"
           content="IE=edge">
@@ -16,81 +17,13 @@
             integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
             crossorigin="anonymous"></script>
     <title>Document</title>
-    <style>
-        table {
-            border: 1px solid;
-            font-size: 1.5vw;
-            /* color: lightgrey; */
-            /* width: 100%; */
-        }
+    <link rel="stylesheet"
+          href="./sytle.css">
 
-        .outline {
-            border-width: 2px;
-        }
-
-        .brd {
-            margin: 5px;
-            margin-top: 20px;
-        }
-
-        .center {
-            text-align: center;
-        }
-
-        .d-grid.equal-width-btns {
-            /*adjust two buttons close len, because the outline has 4px, and between buttons have 8px*/
-            display: grid;
-            grid-template-columns: repeat(2, calc(50% - 4px));
-            /*減多少代表兩個按鈕之間的間距多少*/
-            /* 考慮邊界和填充等因素，這裡假設邊界為 8px */
-        }
-
-        .equal-width-items {
-            width: 100%;
-            max-width: 100%;
-            height: 250px;
-        }
-
-        .equal-width-items .row {
-            height: 100%;
-            /* 內部 .row 元件高度填滿父容器高度 */
-            display: flex;
-            justify-content: space-between;
-        }
-
-        .equal-width-items .col-6 {
-            height: 100%;
-            /* 內部 .col-6 元件高度填滿 .row 的高度 */
-            flex-grow: 1;
-            /* 讓 .col-6 元件填滿 .row 的高度 */
-            box-sizing: border-box;
-        }
-
-        @media (max-width: 575px) {
-            /* 適用於手機螢幕寬度小於 576px */
-            .table {
-                font-size: 16px; /* 設置較小的字體大小 */
-            }
-        }
-
-        @media (min-width: 576px) and (max-width: 767px) {
-            /* 適用於手機螢幕寬度介於 576px 和 767px 之間 */
-            .table {
-                font-size: 18px; /* 設置適中的字體大小 */
-            }
-        }
-
-        @media (min-width: 768px) {
-            /* 適用於手機螢幕寬度大於 768px */
-            .table {
-                font-size: 20px; /* 設置較大的字體大小 */
-            }
-        }
-    </style>
 </head>
-<main class="brd equal-width-items">
 
-    <body>
+<body>
+    <div class="container mar-top">
         <div class="d-grid gap-2">
             <button id="myButton"
                     class="btn btn-outline-primary outline btn-lg mb-3">START</button>
@@ -101,56 +34,51 @@
             <button id="btnScrProtect"
                     class="btn btn-outline-secondary outline btn-lg mb-3">Screen Protect</button>
         </div>
-
-
         <select name="dataChart"
                 id="dataChart"
                 class="form-select form-select-lg mb-3"
                 aria-label=".form-select-lg example">
-
             <option value="noneChart">選擇生成的圖表</option>
             <option value="accChart">Accelerometer</option>
             <option value="gyroChart">Gyroscope</option>
         </select>
         <!-- border border-3  -->
-        <div class="container equal-width-items">
-            <div class="row">
-                <div class="col-6">
-                    <div style="width: 100%; height: 100%;">
-                        <canvas id="myChart" style="width: 100%; height: 100%;"></canvas>
-                    </div>
-                </div>
-                <div class="col-6 d-flex align-items-center">
-                    <table class="table table-hover"
-                           style="margin-top: 16px; height: 100%;">
-                        <tbody>
-                            <tr>
-                                <th style="vertical-align: middle;">#</th>
-                                <th style="vertical-align: middle;">Acc</th>
-                                <th style="vertical-align: middle;">Gyro</th>
-                            </tr>
-                            <tr>
-                                <td style="vertical-align: middle;">X</td>
-                                <td style="vertical-align: middle;"><span id="accX">-1</span></td>
-                                <td style="vertical-align: middle;"><span id="gyroX">-1</span></td>
-                            </tr>
-                            <tr>
-                                <td style="vertical-align: middle;">Y</td>
-                                <td style="vertical-align: middle;"><span id="accY">-1</span></td>
-                                <td style="vertical-align: middle;"><span id="gyroY">-1</span></td>
-                            </tr>
-                            <tr>
-                                <td style="vertical-align: middle;">Z</td>
-                                <td style="vertical-align: middle;"><span id="accZ">-1</span></td>
-                                <td style="vertical-align: middle;"><span id="gyroZ">-1</span></td>
-                            </tr>
-                        </tbody>
-                    </table>
+        <div class="row justify-content-between"
+             style="height: 250px;">
+            <div class="col-6">
+                <div style="width: 100%; height: 100%;">
+                    <canvas id="myChart"
+                            style="width: 100%; height: 100%;"></canvas>
                 </div>
             </div>
-        </div><br>
-
-        <div class="form-floating">
+            <div class="col-6 d-flex  align-items-center">
+                <table class="table table-hover">
+                    <tbody>
+                        <tr>
+                            <th>#</th>
+                            <th>Acc</th>
+                            <th>Gyro</th>
+                        </tr>
+                        <tr>
+                            <td>X</td>
+                            <td><span id="accX">-1</span></td>
+                            <td><span id="gyroX">-1</span></td>
+                        </tr>
+                        <tr>
+                            <td>Y</td>
+                            <td><span id="accY">-1</span></td>
+                            <td><span id="gyroY">-1</span></td>
+                        </tr>
+                        <tr>
+                            <td>Z</td>
+                            <td><span id="accZ">-1</span></td>
+                            <td><span id="gyroZ">-1</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="form-floating mar-top">
             <textarea name=""
                       id="log"
                       cols="50"
@@ -160,9 +88,9 @@
                       placeholder="Leave a comment here"></textarea>
             <label for="floatingTextarea2">Log</label>
         </div>
-        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-        <script src="index.js"></script>
-    </body>
-</main>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="index.js"></script>
+</body>
 
 </html>
