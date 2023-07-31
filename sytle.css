@@ -31,8 +31,41 @@ th {
 
 .btn-group.special {
     display: flex;
-  }
-  
-  .special .btn {
+}
+
+.special .btn {
     flex: 1
-  }
+}
+
+
+.flex-mid {
+    display: flex;
+    justify-content: center;
+    /* 水平居中 */
+    align-items: center;
+    /* 垂直居中 */
+    height: 100vh;
+    /* 设置容器高度以便居中 */
+}
+
+/* 通过设置input的宽度来改变大小 */
+.custom-input {
+    /* width: 300px; */
+    /* 设置输入框宽度为300像素 */
+    height: 160px !important;
+    /* 设置输入框高度为40像素 */
+}
+
+.lock {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 1000;
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+.unlock {
+    display: none;
+}

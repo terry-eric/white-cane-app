@@ -13,6 +13,26 @@ var btnFront = document.getElementById("btn-front");
 var btnNone = document.getElementById("btn-none");
 var btnLeft = document.getElementById("btn-left");
 var btnRight = document.getElementById("btn-right");
+
+
+var btnLock = document.getElementById("btn-lock")
+btnLock.addEventListener("click", () => {
+  lock.classList.add("lock")
+  lock.classList.remove("unlock")
+})
+var lock = document.getElementById("lock")
+var unlockRange = document.getElementById("customRange")
+unlockRange.addEventListener("change", (event) => {
+  console.log(unlockRange.value)
+  if (unlockRange.value < 90) {
+    unlockRange.value = 0
+  } else {
+    // TODO: remove lock div
+    lock.classList.remove("lock")
+    lock.classList.add("unlock")
+    unlockRange.value = 0
+  }
+})
 btnFront.addEventListener("click", function () {
   speak("直走");
 })
@@ -199,7 +219,7 @@ async function onStopButtonClick() {
     log('> Notifications stopped');
     const sensordata = [Acc, Gyro];
     for (i of sensordata) {
-      let header = ['X','Y', 'Z'].join(",")
+      let header = ['X', 'Y', 'Z'].join(",")
       let csv = i.map(row => {
         let data = row.slice(1)
         data.join(',')
@@ -304,7 +324,7 @@ select.addEventListener('change', (event) => {
 var ctx = document.getElementById('myChart');
 var maxDataPoints = 100; // 最多顯示100筆資料
 const labels = [];
-for (let i = 0; i <= maxDataPoints; i+=20) {
+for (let i = 0; i <= maxDataPoints; i += 20) {
   labels.push(i.toString());
 }
 var myChart = new Chart(ctx, {
@@ -347,9 +367,9 @@ var myChart = new Chart(ctx, {
   options: {
     layout: {
       padding: {
-          right: 10
+        right: 10
       }
-  },
+    },
     animation: false,
     scales: {
       x: {
