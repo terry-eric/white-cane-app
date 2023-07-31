@@ -21,8 +21,8 @@ table {
 }
 
 table {
-    margin-top: 16px;
     height: 100%;
+    font-size: 0.25rem;
 }
 
 th {
