@@ -9,6 +9,23 @@ var btnMode = document.getElementById("bleButton");
 btnConnection.addEventListener("click", toggleColor);
 btnMode.addEventListener("click", toggleColorBle);
 
+var btnFront = document.getElementById("btn-front");
+var btnNone = document.getElementById("btn-none");
+var btnLeft = document.getElementById("btn-left");
+var btnRight = document.getElementById("btn-right");
+btnFront.addEventListener("click", function () {
+  speak("直走");
+})
+btnNone.addEventListener("click", function () {
+  speak("無搜尋到導盲磚");
+})
+btnLeft.addEventListener("click", function () {
+  speak("靠左前行");
+})
+btnRight.addEventListener("click", function () {
+  speak("靠右前行");
+})
+
 function toggleColor() {
   if (btnConnection.classList.contains("btn-outline-primary")) {
     onStartButtonClick();
@@ -219,6 +236,9 @@ function callback(event) {
       a.push('0x' + ('00' + value.getUint8(i).toString(16)).slice(-2));
     }
     let voiceMode = parseInt(a, 16);
+    if (voiceMode == 0) {
+      speak("無搜尋到導盲磚");
+    }
     if (voiceMode == 1) {
       speak("直走");
     }
@@ -357,7 +377,7 @@ var dataPoints = 0; // 紀錄資料筆數
 const intervalID = setInterval(() => {
   if (flag) {
     if (!(chartData.length == 0)) {
-      // 如果已經有1000筆資料，則刪除第一筆資料
+      // 如果已經有100筆資料，則刪除第一筆資料
       // console.log(dataPoints);
       if (dataPoints >= maxDataPoints) {
         myChart.data.datasets.forEach(dataset => {
