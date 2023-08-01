@@ -75,5 +75,6 @@ html, body {
     overflow-x: hidden;
   }
   body {
-    position: relative
+    position: relative;
+    overscroll-behavior: contain;
   }
