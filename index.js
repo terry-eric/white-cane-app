@@ -24,7 +24,7 @@ let flag = false;
 let device;
 let mouseDownFlag;
 let startX;
-let percentage;
+let percentage = 0;
 
 var btnConnection = document.getElementById("myButton");
 var btnMode = document.getElementById("bleButton");
@@ -41,12 +41,13 @@ var lockScreen = document.getElementById("lock-screen");
 lockScreen.addEventListener("mousedown", (e) => {
   mouseDownFlag = true;
   startX = e.pageX;
+  console.log("start",startX)
 });
 
 const unlockBar = document.getElementById('unlock-bar');
 lockScreen.addEventListener("mouseup", () => {
   mouseDownFlag = false;
-  // unlock
+  // percentage will be undefine
   console.log(percentage)
 
   if (percentage < 95) {
@@ -67,7 +68,9 @@ lockScreen.addEventListener("mousemove", (e) => {
   else {
     mouseDownFlag == false;
   }
+  console.log(e)
   let deltaX = startX - e.pageX
+  console.log("delta",deltaX)
   // use deltaX to change progress value
   percentage = Math.abs(parseInt(deltaX / (window.screen.width*0.5) * 100))
   if (percentage > 100) { percentage = 100 }
