@@ -120,6 +120,14 @@
                 });
             });
         });
+        // Register service worker to control making site work offline
+
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker
+                .register('/white-cane-app/sw.js')
+                .then(() => { console.log('Service Worker Registered'); });
+        }
+
     </script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="index.js"></script>
