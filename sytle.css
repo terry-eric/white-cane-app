@@ -71,10 +71,13 @@ th {
     display: none;
 }
 
-html, body {
+html,
+body {
+    /* disable refresh */
+    /* overscroll-behavior: none; */
     overflow-x: hidden;
-  }
-  body {
+}
+
+body {
     position: relative;
-    overscroll-behavior: contain;
-  }
+}
