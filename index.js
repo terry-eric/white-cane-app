@@ -39,7 +39,6 @@ var btnRight = document.getElementById("btn-right");
 
 var lockScreen = document.getElementById("lock-screen");
 lockScreen.addEventListener("mousedown", (e) => {
-  console.log(e)
   mouseDownFlag = true;
   startX = e.pageX;
 });
@@ -48,14 +47,15 @@ const unlockBar = document.getElementById('unlock-bar');
 lockScreen.addEventListener("mouseup", () => {
   mouseDownFlag = false;
   // unlock
+  console.log(percentage)
+
   if (percentage < 95) {
     percentage = 0
+    unlockBar.style.width = `0%`
+    unlockBar.innerText = `0%`
   } else {
-    // TODO: remove lock div
     lockScreen.classList.remove("lock")
     lockScreen.classList.add("unlock")
-    unlockBar.style.width = `${0}%`
-    unlockBar.innerText = `${0}%`
   }
 });
 
@@ -63,32 +63,25 @@ lockScreen.addEventListener("mousemove", (e) => {
   // 正值 向下滚  负值 向上滚
   if (mouseDownFlag == true) {
     mouseMoveLen = e;
-    console.log(mouseMoveLen);
   }
   else {
     mouseDownFlag == false;
   }
   let deltaX = startX - e.pageX
-  console.log(deltaX);
   // use deltaX to change progress value
   percentage = Math.abs(parseInt(deltaX / (window.screen.width*0.5) * 100))
   if (percentage > 100) { percentage = 100 }
   unlockBar.style.width = `${percentage}%`
   unlockBar.innerText = `${percentage}%`
 
-  console.log(percentage)
-
-
-  // else{
-  //   unlockBar.style.width = `${0}%`
-  //   unlockBar.innerText = `${0}%`
-  // }
 }, false);
 
 var btnLock = document.getElementById("btn-lock")
 btnLock.addEventListener("click", () => {
   lockScreen.classList.add("lock")
   lockScreen.classList.remove("unlock")
+  unlockBar.style.width = `0%`
+  unlockBar.innerText = `0%`
 })
 
 // var unlockRange = document.getElementById("customRange")
