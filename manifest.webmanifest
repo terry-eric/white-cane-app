@@ -1,5 +1,5 @@
 {
-    "background_color": "purple",
+    "background_color": "white",
     "description": "WhiteCane",
     "display": "fullscreen",
     "icons": [
@@ -10,6 +10,6 @@
       }
     ],
     "name": "WhiteCane APP",
-    "short_name": "Foxes",
+    "short_name": "White Cane",
     "start_url": "/terry-eric/white-cane-app/index.html"
   }
