@@ -49,13 +49,13 @@ lockScreen.addEventListener("mouseup", () => {
   // percentage will be undefine
 
   if (percentage < 95) {
-    percentage = 0
     unlockBar.style.width = `0%`
     unlockBar.innerText = `0%`
   } else {
     lockScreen.classList.remove("lock")
     lockScreen.classList.add("unlock")
   }
+  percentage = 0
 });
 
 lockScreen.addEventListener("mousemove", (e) => {
@@ -87,18 +87,6 @@ btnLock.addEventListener("click", () => {
   unlockBar.innerText = `0%`
 })
 
-// var unlockRange = document.getElementById("customRange")
-// unlockRange.addEventListener("change", (event) => {
-//   console.log(unlockRange.value)
-//   if (unlockRange.value < 90) {
-//     unlockRange.value = 0
-//   } else {
-//     // TODO: remove lock div
-//     lockScreen.classList.remove("lock")
-//     lockScreen.classList.add("unlock")
-//     unlockRange.value = 0
-//   }
-// })
 btnFront.addEventListener("click", function () {
   speak("直走");
 })
