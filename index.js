@@ -71,7 +71,7 @@ lockScreen.addEventListener("mousemove", (e) => {
   let deltaX = startX - e.pageX
   console.log(deltaX);
   // use deltaX to change progress value
-  percentage = Math.abs(parseInt(deltaX / window.screen.width * 100))
+  percentage = Math.abs(parseInt(deltaX / (window.screen.width*0.8) * 100))
   if (percentage > 100) { percentage = 100 }
   unlockBar.style.width = `${percentage}%`
   unlockBar.innerText = `${percentage}%`
