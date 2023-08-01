@@ -1,8 +1,30 @@
+var mouseEventTypes = {
+  touchstart: "mousedown",
+  touchmove: "mousemove",
+  touchend: "mouseup"
+};
+
+for (originalType in mouseEventTypes) {
+  document.addEventListener(originalType, function (originalEvent) {
+    let event = document.createEvent("MouseEvents");
+    touch = originalEvent.changedTouches[0];
+    event.initMouseEvent(mouseEventTypes[originalEvent.type], true, true,
+      window, 0, touch.screenX, touch.screenY, touch.clientX,
+      touch.clientY, touch.ctrlKey, touch.altKey, touch.shiftKey,
+      touch.metaKey, 0, null);
+    originalEvent.target.dispatchEvent(event);
+  });
+}
+
+
 const Acc = [], Gyro = [];
 let chartType = "noneChart";
 let chartData = [];
 let flag = false;
 let device;
+let mouseDownFlag;
+let startX;
+let percentage;
 
 var btnConnection = document.getElementById("myButton");
 var btnMode = document.getElementById("bleButton");
@@ -15,24 +37,72 @@ var btnLeft = document.getElementById("btn-left");
 var btnRight = document.getElementById("btn-right");
 
 
-var btnLock = document.getElementById("btn-lock")
-btnLock.addEventListener("click", () => {
-  lock.classList.add("lock")
-  lock.classList.remove("unlock")
-})
-var lock = document.getElementById("lock")
-var unlockRange = document.getElementById("customRange")
-unlockRange.addEventListener("change", (event) => {
-  console.log(unlockRange.value)
-  if (unlockRange.value < 90) {
-    unlockRange.value = 0
+var lockScreen = document.getElementById("lock-screen");
+lockScreen.addEventListener("mousedown", (e) => {
+  console.log(e)
+  mouseDownFlag = true;
+  startX = e.pageX;
+});
+
+const unlockBar = document.getElementById('unlock-bar');
+lockScreen.addEventListener("mouseup", () => {
+  mouseDownFlag = false;
+  // unlock
+  if (percentage < 95) {
+    percentage = 0
   } else {
     // TODO: remove lock div
-    lock.classList.remove("lock")
-    lock.classList.add("unlock")
-    unlockRange.value = 0
+    lockScreen.classList.remove("lock")
+    lockScreen.classList.add("unlock")
+    unlockBar.style.width = `${0}%`
+    unlockBar.innerText = `${0}%`
   }
+});
+
+lockScreen.addEventListener("mousemove", (e) => {
+  // 正值 向下滚  负值 向上滚
+  if (mouseDownFlag == true) {
+    mouseMoveLen = e;
+    console.log(mouseMoveLen);
+  }
+  else {
+    mouseDownFlag == false;
+  }
+  let deltaX = startX - e.pageX
+  console.log(deltaX);
+  // use deltaX to change progress value
+  percentage = Math.abs(parseInt(deltaX / window.screen.width * 100))
+  if (percentage > 100) { percentage = 100 }
+  unlockBar.style.width = `${percentage}%`
+  unlockBar.innerText = `${percentage}%`
+
+  console.log(percentage)
+
+
+  // else{
+  //   unlockBar.style.width = `${0}%`
+  //   unlockBar.innerText = `${0}%`
+  // }
+}, false);
+
+var btnLock = document.getElementById("btn-lock")
+btnLock.addEventListener("click", () => {
+  lockScreen.classList.add("lock")
+  lockScreen.classList.remove("unlock")
 })
+
+// var unlockRange = document.getElementById("customRange")
+// unlockRange.addEventListener("change", (event) => {
+//   console.log(unlockRange.value)
+//   if (unlockRange.value < 90) {
+//     unlockRange.value = 0
+//   } else {
+//     // TODO: remove lock div
+//     lockScreen.classList.remove("lock")
+//     lockScreen.classList.add("unlock")
+//     unlockRange.value = 0
+//   }
+// })
 btnFront.addEventListener("click", function () {
   speak("直走");
 })
