@@ -16,13 +16,13 @@
 </head>
 
 <body>
-    <div id="lock-screen" class="unlock">
-        <div class="container mt-3 flex-mid">
+    <div id="lock-screen" class="hidden">
+        <div class="container flex-mid">
             <div class="col-12">
                 <div class="d-grid gap-2">
                     <div class="progress" style="height: 100px;">
-                        <div id="unlock-bar" class="progress-bar progress-bar-striped progress-bar-animated bg-info"
-                             role="progressbar" style="width: 0%; transition: none;">0%</div>
+                        <div id="unlock-bar" class="progress-bar progress-bar-striped progress-bar-animated bg-warning"
+                             role="progressbar" style="width: 0%; transition: none; font-size: 40px;">0%</div>
                     </div>
                     <!-- <label for="customRange" class="form-label m-auto display-6">向右拉解鎖</label>
                     <input type="range" class="form-range" min="0" max="100" value="0" id="customRange"> -->
@@ -92,7 +92,8 @@
         </div>
     </div>
     <script>
-        // Register service worker to control making site work offline
+        // a2hs https://github.com/mdn/pwa-examples/tree/main/a2hs
+        // Register service worker to control making site work offline 
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker
                 .register('/white-cane-app/sw.js')

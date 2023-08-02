@@ -52,8 +52,9 @@ lockScreen.addEventListener("mouseup", () => {
     unlockBar.style.width = `0%`
     unlockBar.innerText = `0%`
   } else {
-    lockScreen.classList.remove("lock")
-    lockScreen.classList.add("unlock")
+    // lockScreen.classList.remove("lock")
+    // lockScreen.classList.add("unlock")
+    lockScreen.classList.toggle("hidden");
   }
   percentage = 0
 });
@@ -81,8 +82,10 @@ lockScreen.addEventListener("mousemove", (e) => {
 
 var btnLock = document.getElementById("btn-lock")
 btnLock.addEventListener("click", () => {
-  lockScreen.classList.add("lock")
-  lockScreen.classList.remove("unlock")
+  // lockScreen.classList.add("lock")
+  // lockScreen.classList.remove("unlock")
+  lockScreen.classList.toggle("hidden");
+
   unlockBar.style.width = `0%`
   unlockBar.innerText = `0%`
 })

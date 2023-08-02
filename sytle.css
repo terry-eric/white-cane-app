@@ -56,7 +56,10 @@ th {
     /* 设置输入框高度为40像素 */
 }
 
-.lock {
+#lock-screen {
+    opacity: 1;
+    transition: opacity 3s ease, height 1s ease;
+
     position: fixed;
     top: 0;
     left: 0;
@@ -67,14 +70,19 @@ th {
     /* transition: 2s; */
 }
 
-.unlock {
+#lock-screen.hidden {
+    opacity: 0;
+    height: 0;
+    /* let layer put last ,fix can not touch button problem*/
+    z-index: -1;
+}
+
+#lock-screen.hidden * {
     display: none;
 }
 
 html,
 body {
-    /* disable refresh */
-    /* overscroll-behavior: none; */
     overflow-x: hidden;
 }
 
