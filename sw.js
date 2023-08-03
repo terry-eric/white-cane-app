@@ -11,7 +11,7 @@ self.addEventListener('install', (e) => {
       '/white-cane-app/keep_wake.js', 
       '/white-cane-app/mouse_event.js', 
       '/white-cane-app/querySelector_log.js', 
-      '/white-cane-app/voice.js'
+      '/white-cane-app/voice.js',
     ])),
   );
 });
