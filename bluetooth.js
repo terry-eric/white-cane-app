@@ -1,8 +1,7 @@
 import { speak } from "./voice.js";
-import { log } from "./querySelector_log.js";
-import { bytes2int16 } from "./decode.js";
+import { bytes2int16, log } from "./utils.js";
 import { csvSave } from "./csv_save.js";
-import { startChart, chartTypeEvent, dataChartEvent } from "./chart.js";
+import { startChart, chartTypeEvent, addData } from "./chart.js";
 // add new
 let serviceUuid = 0x181A;
 // let serviceUuid = "4fafc201-1fb5-459e-8fcc-c5c9c331914b";
@@ -142,14 +141,14 @@ function callback(event) {
             document.getElementById("accY").innerHTML = Y;
             document.getElementById("accZ").innerHTML = Z;
             Acc.push(["acc", X, Y, Z]);
-            if (chartTypeEvent() === "accChart") { dataChartEvent(X, Y, Z) };
+            if (chartTypeEvent() === "accChart") { addData(X, Y, Z) };
         }
         if (event.currentTarget.uuid === gyroUuid) {
             document.getElementById("gyroX").innerHTML = X;
             document.getElementById("gyroY").innerHTML = Y;
             document.getElementById("gyroZ").innerHTML = Z;
             Gyro.push(["gyro", X, Y, Z]);
-            if (chartTypeEvent() === "gyroChart") { dataChartEvent(X, Y, Z) };
+            if (chartTypeEvent() === "gyroChart") { addData(X, Y, Z) };
         }
     }
 }
