@@ -10,7 +10,7 @@ for (let i = 0; i <= maxDataPoints; i += 20) {
     labels.push(i.toString());
 }
 
-export function addData(X,Y,Z){
+export function addData(x, y, z) {
     const chartData = [x, y, z]
     if (flag) {
         if (!(chartData.length == 0)) {
@@ -99,35 +99,14 @@ export function creatNewChart() {
             }
         }
     });
-    // setInterval(() => {
-    //     if (flag) {
-    //         if (!(chartData.length == 0)) {
-    //             // 如果已經有100筆資料，則刪除第一筆資料
-    //             // console.log(dataPoints);
-    //             if (dataPoints >= maxDataPoints) {
-    //                 myChart.data.datasets.forEach(dataset => {
-    //                     dataset.data.shift(); // 刪除第一筆資料
-    //                 });
-    //             } else {
-    //                 dataPoints++;
-    //             }
-
-    //             // 新增新的數據
-    //             myChart.data.datasets.forEach((dataset, index) => {
-    //                 dataset.data.push(chartData[index]);
-    //             });
-    //         }
-    //         myChart.update(); // 更新圖表
-    //     }
-    // }, 10);
 }
 
 
-export function chartTypeEvent(){
+export function chartTypeEvent() {
     return chartType;
 }
-export function startChart(status){
-    flag = event;
+export function startChart(status) {
+    flag = status;
 }
 
 export function changeSensorChart(event) {
