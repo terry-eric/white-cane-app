@@ -1,3 +1,5 @@
+import { log } from "./utils.js"
+
 export function csvSave(Acc, Gyro){
     const sensordata = [Acc, Gyro];
     for (i of sensordata) {

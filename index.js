@@ -2,8 +2,8 @@ import { mouseTouchChange } from "./mouse_event.js";
 import { speak } from "./voice.js";
 import { wakeLockStart, wakeLockStop } from "./keep_wake.js";
 import { bleSreach, bleDisconnect, sendModeEvent } from "./bluetooth.js";
-import { log } from "./querySelector_log.js";
-import { creatNewChart, changeChart } from "./chart.js";
+import { log } from "./utils.js";
+import { creatNewChart, changeSensorChart } from "./chart.js";
 import { lock, positionBarCal, startPoint, unlock } from "./animation_erase.js";
 
 mouseTouchChange();
@@ -91,4 +91,4 @@ async function onStopButtonClick() {
 
 var select = document.getElementById('dataChart');
 // 當選取選單時，設定要顯示的圖表類型
-select.addEventListener('change', changeChart);
+select.addEventListener('change', changeSensorChart);
