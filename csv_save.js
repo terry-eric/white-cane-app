@@ -12,7 +12,7 @@ export function csvSave(Acc, Gyro){
       csv = `${header}\n${csv}`
 
       document.querySelector("#log").innerHTML = '';
-      log(csv);
+      // log(csv);
       const blob = new Blob([csv], { type: 'text/csv' });
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
