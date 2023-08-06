@@ -17,7 +17,7 @@ let service;
 let device;
 const Acc = [], Gyro = [];
 
-export async function bleSreach() {
+export async function bleSearch() {
     try {
         log('Requesting Bluetooth Device...');
         device = await navigator.bluetooth.requestDevice({
@@ -27,11 +27,8 @@ export async function bleSreach() {
             filters: [{ name: "WhiteCane" }]
         });
 
-        connect();
-        device.addEventListener('gattserverdisconnected', () => {
-            speak('藍芽連接錯誤，重新連接中');
-            connect();
-        });
+        connectDevice();
+        device.addEventListener('gattserverdisconnected',reConnect);
 
     } catch (error) {
         speak('連接錯誤，請重新連接');
@@ -47,7 +44,7 @@ export async function bleDisconnect() {
         characteristicTarget.removeEventListener('characteristicvaluechanged',
             callback);
     }
-    device.removeEventListener('gattserverdisconnected', toConnect);
+    device.removeEventListener('gattserverdisconnected', reConnect);
     await server.disconnect(); // 需要手動斷開 GATT 伺服器的連線
     speak('已斷開連接');
     log('> Notifications stopped');
@@ -56,35 +53,42 @@ export async function bleDisconnect() {
 
 }
 
+async function connectDevice() {
+    try{
+        time('Connecting to Bluetooth Device... ');
+        log('Connecting to GATT Server...');
+        server = await device.gatt.connect();
+    
+        log('Getting Service...');
+        service = await server.getPrimaryService(serviceUuid);
+    
+        log('Getting Characteristic...');
+        // add new
+    
+        // 使用 for...of 迴圈遍歷陣列中的元素，取得每個 UUID 對應的 characteristic 並啟用通知
+        for (const [index, UuidTarget] of UuidTargets.entries()) {
+    
+            // 使用 service.getCharacteristic() 方法來取得指定 UUID 對應的 characteristic
+            let characteristicTarget = await service.getCharacteristic(UuidTarget);
+    
+            // 當 characteristic 的值發生改變時，執行 callback 函數
+            characteristicTarget.addEventListener("characteristicvaluechanged", callback);
+    
+            // 啟用 characteristic 的通知功能，這樣當 characteristic 的值改變時，就會發送通知
+            await characteristicTarget.startNotifications();
+        };
+        speak('成功連接');
+        startChart(true);
+    }catch(error){
+        console.log("連接錯誤",error);
+    }
+}
 
-async function connect() {
+async function reConnect() {
 
     exponentialBackoff(3 /* max retries */, 2 /* seconds delay */,
         async function toTry() {
-            time('Connecting to Bluetooth Device... ');
-            log('Connecting to GATT Server...');
-            server = await device.gatt.connect();
 
-            log('Getting Service...');
-            service = await server.getPrimaryService(serviceUuid);
-
-            log('Getting Characteristic...');
-            // add new
-
-            // 使用 for...of 迴圈遍歷陣列中的元素，取得每個 UUID 對應的 characteristic 並啟用通知
-            for (const [index, UuidTarget] of UuidTargets.entries()) {
-
-                // 使用 service.getCharacteristic() 方法來取得指定 UUID 對應的 characteristic
-                let characteristicTarget = await service.getCharacteristic(UuidTarget);
-
-                // 當 characteristic 的值發生改變時，執行 callback 函數
-                characteristicTarget.addEventListener("characteristicvaluechanged", callback);
-
-                // 啟用 characteristic 的通知功能，這樣當 characteristic 的值改變時，就會發送通知
-                await characteristicTarget.startNotifications();
-
-                startChart(true);
-            }
         },
         function success() {
             log('> Bluetooth Device connected. Try disconnect it now.');

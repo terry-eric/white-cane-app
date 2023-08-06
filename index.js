@@ -1,7 +1,7 @@
 import { mouseTouchChange } from "./mouse_event.js";
 import { speak } from "./voice.js";
 import { wakeLockStart, wakeLockStop } from "./keep_wake.js";
-import { bleSreach, bleDisconnect, sendModeEvent } from "./bluetooth.js";
+import { bleSearch, bleDisconnect, sendModeEvent } from "./bluetooth.js";
 import { log } from "./utils.js";
 import { creatNewChart, changeSensorChart } from "./chart.js";
 import { lock, positionBarCal, startPoint, unlock } from "./animation_erase.js";
@@ -71,7 +71,7 @@ async function onStartButtonClick() {
   startButton.classList.remove("btn-outline-primary");
   startButton.classList.add("btn-outline-danger");
   startButton.innerHTML = "STOP";
-  bleSreach();
+  bleSearch();
 }
 
 async function onStopButtonClick() {
