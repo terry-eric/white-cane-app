@@ -2,7 +2,7 @@ import { log } from "./utils.js"
 
 export function csvSave(Acc, Gyro){
     const sensordata = [Acc, Gyro];
-    for (i of sensordata) {
+    for (const i of sensordata) {
       let header = ['X', 'Y', 'Z'].join(",")
       let csv = i.map(row => {
         let data = row.slice(1)
