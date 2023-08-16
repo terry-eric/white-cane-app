@@ -90,11 +90,14 @@
             <button id="btn-left" type="button" class="btn btn-outline-secondary">Left</button>
             <button id="btn-right" type="button" class="btn btn-outline-secondary">Right</button>
         </div>
+        <div class="btn-group btn-group-lg special mt-3" role="group" aria-label="Basic outlined example">
+            <button id="btn-height" type="button" class="btn btn-outline-secondary">height difference</button>
+        </div>
     </div>
     <script>
         // a2hs https://github.com/mdn/pwa-examples/tree/main/a2hs
         // Register service worker to control making site work offline 
-        if ('serviceWorker' in navigator) {
+        if ('serviceWorker' in navigator) { 
             navigator.serviceWorker
                 .register('/white-cane-app/sw.js')
                 .then(() => { console.log('Service Worker Registered'); });

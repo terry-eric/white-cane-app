@@ -40,7 +40,10 @@ var btnRight = document.getElementById("btn-right");
 btnRight.addEventListener("click", function () {
   speak("靠右前行");
 })
-
+var btnHeight = document.getElementById("btn-height");
+btnHeight.addEventListener("click", function () {
+  speak("注意前方高低差");
+})
 
 function toggleColor() {
   if (startButton.classList.contains("btn-outline-primary")) {
