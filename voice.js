@@ -3,5 +3,4 @@ export function speak(text) {
     const utter = new SpeechSynthesisUtterance()
     utter.text = text
     synth.speak(utter)
-  }
-  
+}
