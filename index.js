@@ -20,28 +20,22 @@ lockScreen.addEventListener("mousedown", startPoint);
 lockScreen.addEventListener("mousemove", positionBarCal, false);
 lockScreen.addEventListener("mouseup", unlock);
 
-var btnLock = document.getElementById("btn-lock")
-btnLock.addEventListener("click", lock)
+document.getElementById("btn-lock").addEventListener("click", lock)
 
 // 測試按鈕
-var btnFront = document.getElementById("btn-front");
-btnFront.addEventListener("click", function () {
+document.getElementById("btn-front").addEventListener("click", function () {
   speak("直走");
 })
-var btnNone = document.getElementById("btn-none");
-btnNone.addEventListener("click", function () {
+document.getElementById("btn-none").addEventListener("click", function () {
   speak("無搜尋到導盲磚");
 })
-var btnLeft = document.getElementById("btn-left");
-btnLeft.addEventListener("click", function () {
+document.getElementById("btn-left").addEventListener("click", function () {
   speak("靠左前行");
 })
-var btnRight = document.getElementById("btn-right");
-btnRight.addEventListener("click", function () {
+document.getElementById("btn-right").addEventListener("click", function () {
   speak("靠右前行");
 })
-var btnHeight = document.getElementById("btn-height");
-btnHeight.addEventListener("click", function () {
+document.getElementById("btn-height").addEventListener("click", function () {
   speak("注意前方高低差");
 })
 
