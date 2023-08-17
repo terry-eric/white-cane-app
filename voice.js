@@ -6,5 +6,4 @@ export function speak(text) {
       synth.cancel();
     }
     synth.speak(utter)
-  }
-  
+}

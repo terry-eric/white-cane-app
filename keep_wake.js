@@ -31,7 +31,7 @@ export function wakeLockStart() {
 
 }
 
-export function wakeLockStop(){
+export function wakeLockStop() {
     if (canWakeLock == true) {
         wakeLock.removeEventListener('release', screenRrelease);
         document.removeEventListener('visibilitychange', reWakeScreen);

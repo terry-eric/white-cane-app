@@ -3,13 +3,13 @@
     "description": "WhiteCane",
     "display": "fullscreen",
     "icons": [
-      {
-        "src": "icon/fox-icon.png",
-        "sizes": "192x192",
-        "type": "image/png"
-      }
+        {
+            "src": "icon/fox-icon.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        }
     ],
     "name": "WhiteCane APP",
     "short_name": "White Cane",
     "start_url": "/white-cane-app/index.html"
-  }
+}

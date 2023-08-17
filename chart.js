@@ -6,7 +6,7 @@ var ctx = document.getElementById('myChart');
 var maxDataPoints = 100; // 最多顯示100筆資料
 var dataPoints = 0; // 紀錄資料筆數
 const labels = [];
-for (let i = 0; i <= maxDataPoints; i ++) {
+for (let i = 0; i <= maxDataPoints; i++) {
     labels.push(i.toString());
 }
 
@@ -82,22 +82,22 @@ export function creatNewChart() {
                 x: {
                     grid: {
                         color: "#ffffff",
-                        tickWidth:1,
-                        tickBorderDash: [0,1],
-                        offset:true
+                        tickWidth: 1,
+                        tickBorderDash: [0, 1],
+                        offset: true
                     },
                     ticks: {
                         color: "#ffffff",
                     },
-                    title:{
-                        padding:5
+                    title: {
+                        padding: 5
                     }
                 },
                 myScale: {
                     position: 'left',
                     grid: {
                         color: "#ffffff",
-                        tickBorderDash: [0,1]
+                        tickBorderDash: [0, 1]
                     },
                     ticks: {
                         color: "#ffffff",
