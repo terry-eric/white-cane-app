@@ -123,6 +123,9 @@ function callback(event) {
         if (voiceMode == 3) {
             speak("靠右前行");
         }
+        if (voiceMode == 4){
+            speak("注意前方高低差")
+        }
         console.log(voiceMode);
     }
 
