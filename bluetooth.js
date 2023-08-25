@@ -9,20 +9,21 @@ let accUuid = "beb5483e-36e1-4688-b7f5-ea07361b26a8";
 let gyroUuid = "d2912856-de63-11ed-b5ea-0242ac120002";
 let switchUuid = "4e1c00da-57b6-4cfd-83f8-6b1e2beae05d";
 let voiceUuid = "a0451b3a-f056-4ce5-bc13-0838e26b2d68";
+let ultrasoundUuid = "f064e521-de21-4027-a7da-b83241ba8fd1";
 
 // 宣告一個包含兩個 UUID 的陣列
-let UuidTargets = [accUuid, gyroUuid, switchUuid, voiceUuid];
+let UuidTargets = [accUuid, gyroUuid, switchUuid, voiceUuid, ultrasoundUuid];
 let server;
 let service;
 let device;
-const Acc = [], Gyro = [];
+const Acc = [], Gyro = [], US = [];
 
 export async function bleSearch() {
     try {
         log('Requesting Bluetooth Device...');
         device = await navigator.bluetooth.requestDevice({
             // add newDD
-            optionalServices: [serviceUuid, accUuid, gyroUuid, voiceUuid],
+            optionalServices: [serviceUuid, accUuid, gyroUuid, voiceUuid, ultrasoundUuid],
             // acceptAllDevices: true
             filters: [{ name: "WhiteCane" }]
         });
@@ -157,6 +158,22 @@ function callback(event) {
             Gyro.push(["gyro", X, Y, Z]);
             if (chartTypeEvent() === "gyroChart") { addData(X, Y, Z) };
         }
+    }
+    
+    if (event.currentTarget.uuid == ultrasoundUuid){
+        let value = event.currentTarget.value;
+        let a = [];
+        for (let i = 0; i < value.byteLength; i++) {
+            a.push('0x' + ('00' + value.getUint8(i).toString(16)).slice(-2));
+        }
+        let bytes = a;
+        console.log(bytes);
+        
+        let val = bytes2int16([bytes[0], bytes[1]]) / 100
+        console.log(val);
+
+        document.getElementById("ultrasound").innerHTML = val;
+        US.push(["US",val])
     }
 }
 
