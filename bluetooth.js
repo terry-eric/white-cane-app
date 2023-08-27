@@ -107,10 +107,12 @@ function callback(event) {
     // console.log(event.currentTarget.uuid)
     if (event.currentTarget.uuid === voiceUuid) {
         let value = event.currentTarget.value;
+        console.log(value);
         let a = [];
         for (let i = 0; i < value.byteLength; i++) {
             a.push('0x' + ('00' + value.getUint8(i).toString(16)).slice(-2));
         }
+        console.log(a);
         let voiceMode = parseInt(a, 16);
         if (voiceMode == 0) {
             speak("無搜尋到導盲磚");
@@ -125,7 +127,7 @@ function callback(event) {
             speak("靠右前行");
         }
         if (voiceMode == 4){
-            speak("注意前方高低差")
+            speak("注意高低差")
         }
         console.log(voiceMode);
     }
@@ -167,10 +169,10 @@ function callback(event) {
             a.push('0x' + ('00' + value.getUint8(i).toString(16)).slice(-2));
         }
         let bytes = a;
-        console.log(bytes);
+        // console.log(bytes);
         
         let val = bytes2int16([bytes[0], bytes[1]]) / 100
-        console.log(val);
+        // console.log(val);
 
         document.getElementById("ultrasound").innerHTML = val;
         US.push(["US",val])

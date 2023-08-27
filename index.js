@@ -36,8 +36,15 @@ document.getElementById("btn-right").addEventListener("click", function () {
   speak("靠右前行");
 })
 document.getElementById("btn-height").addEventListener("click", function () {
-  speak("注意前方高低差");
+  speak("注意高低差");
 })
+document.getElementById("btn-obstacle").addEventListener("click", function () {
+  speak("注意障礙物");
+})
+document.getElementById("btn-GuideBrick").addEventListener("click", function () {
+  speak("發現導盲磚");
+})
+
 
 function toggleColor() {
   if (startButton.classList.contains("btn-outline-primary")) {
