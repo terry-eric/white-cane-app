@@ -22,7 +22,7 @@ lockScreen.addEventListener("mouseup", unlock);
 
 document.getElementById("btn-lock").addEventListener("click", lock)
 
-// 測試按鈕
+// 測試按鈕 
 document.getElementById("btn-front").addEventListener("click", function () {
   speak("直走");
 })
