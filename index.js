@@ -44,7 +44,9 @@ document.getElementById("btn-obstacle").addEventListener("click", function () {
 document.getElementById("btn-GuideBrick").addEventListener("click", function () {
   speak("發現導盲磚");
 })
-
+document.getElementById("btn-Crosswalk").addEventListener("click", function () {
+  speak("發現斑馬線");
+})
 
 function toggleColor() {
   if (startButton.classList.contains("btn-outline-primary")) {
