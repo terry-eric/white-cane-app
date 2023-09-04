@@ -10,20 +10,32 @@ let gyroUuid = "d2912856-de63-11ed-b5ea-0242ac120002";
 let switchUuid = "4e1c00da-57b6-4cfd-83f8-6b1e2beae05d";
 let voiceUuid = "a0451b3a-f056-4ce5-bc13-0838e26b2d68";
 let ultrasoundUuid = "f064e521-de21-4027-a7da-b83241ba8fd1";
+let thresholdUuid = "b51ff51f-0f0e-4406-b9be-92f40c1a14e8";
 
 // 宣告一個包含兩個 UUID 的陣列
-let UuidTargets = [accUuid, gyroUuid, switchUuid, voiceUuid, ultrasoundUuid];
+let UuidTargets = [accUuid, gyroUuid, switchUuid, voiceUuid, ultrasoundUuid, thresholdUuid];
 let server;
 let service;
 let device;
 const Acc = [], Gyro = [], US = [];
+
+
+let thresholdInput = document.getElementById("threshold")
+thresholdInput.addEventListener("input", (event) => {
+    let val = event.target.value;
+    if (isNaN(val)) {
+        sendModeEvent(thresholdUuid, val.toString());
+        thresholdInput.placeholder = val;
+    }
+})
+
 
 export async function bleSearch() {
     try {
         log('Requesting Bluetooth Device...');
         device = await navigator.bluetooth.requestDevice({
             // add newDD
-            optionalServices: [serviceUuid, accUuid, gyroUuid, voiceUuid, ultrasoundUuid],
+            optionalServices: [serviceUuid, accUuid, gyroUuid, voiceUuid, ultrasoundUuid, thresholdUuid],
             // acceptAllDevices: true
             filters: [{ name: "WhiteCane" }]
         });
@@ -51,7 +63,7 @@ export async function bleDisconnect() {
     log('> Notifications stopped');
     csvSave(Acc, Gyro);
     startChart(false);
-
+    thresholdInput.disabled = true;
 }
 
 async function connectDevice() {
@@ -80,6 +92,8 @@ async function connectDevice() {
         };
         speak('成功連接');
         startChart(true);
+        // 啟用輸入框
+        thresholdInput.disabled = false;
     } catch (error) {
         console.log("連接錯誤", error);
     }
@@ -95,6 +109,8 @@ async function reConnect() {
             log('> Bluetooth Device connected. Try disconnect it now.');
             speak('成功連接');
             log('> Notifications started');
+            // 啟用輸入框
+            thresholdInput.disabled = false; 
         },
         function fail() {
             time('Failed to reconnect.');
@@ -126,7 +142,7 @@ function callback(event) {
         if (voiceMode == 3) {
             speak("靠右前行");
         }
-        if (voiceMode == 4){
+        if (voiceMode == 4) {
             speak("注意高低差")
         }
         console.log(voiceMode);
@@ -162,7 +178,7 @@ function callback(event) {
         }
     }
     
-    if (event.currentTarget.uuid == ultrasoundUuid){
+    if (event.currentTarget.uuid == ultrasoundUuid) {
         let value = event.currentTarget.value;
         let a = [];
         for (let i = 0; i < value.byteLength; i++) {
@@ -175,17 +191,17 @@ function callback(event) {
         // console.log(val);
 
         document.getElementById("ultrasound").innerHTML = val;
-        US.push(["US",val])
+        US.push(["US", val])
     }
 }
 
-export async function sendModeEvent(message) {
+export async function sendModeEvent(message, Uuid) {
     try {
         // 傳送訊息
         console.log(message);
         const encoder = new TextEncoder(); // 文字編碼器
         const data = encoder.encode(message); // 將字串轉換為Uint8Array數據
-        let characteristicBle = await service.getCharacteristic(switchUuid);
+        let characteristicBle = await service.getCharacteristic(Uuid);
         await new Promise((resolve, reject) => {
             characteristicBle.writeValue(data)
                 .then(() => {
