@@ -13,21 +13,22 @@ let ultrasoundUuid = "f064e521-de21-4027-a7da-b83241ba8fd1";
 let thresholdUuid = "b51ff51f-0f0e-4406-b9be-92f40c1a14e8";
 
 // 宣告一個包含兩個 UUID 的陣列
-let UuidTargets = [accUuid, gyroUuid, switchUuid, voiceUuid, ultrasoundUuid, thresholdUuid];
+// let UuidTargets = [accUuid, gyroUuid, switchUuid, voiceUuid, ultrasoundUuid, thresholdUuid];
+let UuidTargets = [accUuid, gyroUuid, switchUuid, voiceUuid, ultrasoundUuid];
 let server;
 let service;
 let device;
 const Acc = [], Gyro = [], US = [];
 
 
-let thresholdInput = document.getElementById("threshold")
-thresholdInput.addEventListener("input", (event) => {
-    let val = event.target.value;
-    if (isNaN(val)) {
-        sendModeEvent(thresholdUuid, val.toString());
-        thresholdInput.placeholder = val;
-    }
-})
+// let thresholdInput = document.getElementById("threshold")
+// thresholdInput.addEventListener("input", (event) => {
+//     let val = event.target.value;
+//     if (isNaN(val)) {
+//         sendModeEvent(thresholdUuid, val.toString());
+//         thresholdInput.placeholder = val;
+//     }
+// })
 
 
 export async function bleSearch() {
@@ -35,7 +36,8 @@ export async function bleSearch() {
         log('Requesting Bluetooth Device...');
         device = await navigator.bluetooth.requestDevice({
             // add newDD
-            optionalServices: [serviceUuid, accUuid, gyroUuid, voiceUuid, ultrasoundUuid, thresholdUuid],
+            // optionalServices: [serviceUuid, accUuid, gyroUuid, voiceUuid, ultrasoundUuid, thresholdUuid],
+            optionalServices: [serviceUuid, accUuid, gyroUuid, voiceUuid, ultrasoundUuid],
             // acceptAllDevices: true
             filters: [{ name: "WhiteCane" }]
         });
