@@ -36,13 +36,15 @@ document.getElementById("btn-right").addEventListener("click", function () {
   speak("靠右前行");
 })
 document.getElementById("btn-height").addEventListener("click", function () {
-  speak("注意高低差");
+  // speak("注意高低差");
+  document.getElementById('a_mp3').play();
 })
 document.getElementById("btn-obstacle").addEventListener("click", function () {
   speak("注意障礙物");
 })
 document.getElementById("btn-GuideBrick").addEventListener("click", function () {
-  speak("發現導盲磚");
+  // speak("發現導盲磚");
+  document.getElementById('b_mp3').play();
 })
 document.getElementById("btn-Crosswalk").addEventListener("click", function () {
   speak("發現斑馬線");
